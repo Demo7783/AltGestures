@@ -1,0 +1,37 @@
+# 构建产物
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.userprefs
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# 测试与覆盖率
+TestResults/
+*.coverage
+coverage*.xml
+
+# 本地配置与日志
+*.log
+config.local.json
+*.bak-*
+
+# NuGet
+packages/
+*.nupkg
+
+# 上游参考源码（可从上游 clone，不纳入本仓库）
+#   WGestures: https://github.com/yingDev/WGestures  (GPL-2.0)
+#   AltDrag:   https://github.com/stefansundin/altdrag (GPL-3.0，仅行为参考)
+reference/
+
+# OS
+Thumbs.db
+Desktop.ini
