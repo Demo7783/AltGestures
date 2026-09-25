@@ -35,3 +35,6 @@ reference/
 # OS
 Thumbs.db
 Desktop.ini
+
+# 执行方 patch 操作残留
+*.patched
