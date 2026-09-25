@@ -24,6 +24,7 @@ public static class NativeConstants
     public const int WM_XBUTTONUP = 0x020C;
     public const int WM_INPUT = 0x00FF;
     public const int WM_CLOSE = 0x0010;
+    public const int WM_SYSCOMMAND = 0x0112;
     public const int WM_USER = 0x0400;
 
     public const int SM_CXSCREEN = 0;
@@ -45,6 +46,14 @@ public static class NativeConstants
 
     public const int GWL_STYLE = -16;
     public const int GWL_EXSTYLE = -20;
+    public const int WS_EX_TOPMOST = 0x00000008;
+    public const int WS_EX_LAYERED = 0x00080000;
+    public const int SC_MINIMIZE = 0xF020;
+    public const int SW_MAXIMIZE = 3;
+    public const int SW_MINIMIZE = 6;
+    public const int SW_RESTORE = 9;
+    public const nint HWND_BOTTOM = -1;
+    public const uint LWA_ALPHA = 2;
     public const int GA_PARENT = 1;
     public const int GA_ROOT = 2;
     public const int GA_ROOTOWNER = 3;

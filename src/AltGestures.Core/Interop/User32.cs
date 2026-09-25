@@ -30,6 +30,9 @@ public static class User32
     public static extern bool GetWindowRect(nint window, out RECT rect);
 
     [DllImport("user32.dll", SetLastError = true)]
+    public static extern uint GetDoubleClickTime();
+
+    [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool GetClientRect(nint window, out RECT rect);
 
@@ -74,11 +77,25 @@ public static class User32
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool IsWindow(nint window);
 
+    public delegate bool EnumWindowsProc(nint window, nint data);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool EnumWindows(EnumWindowsProc callback, nint data);
+
     [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtrW")]
     public static extern nint GetWindowLongPtr(nint window, int index);
 
     [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtrW")]
     public static extern nint SetWindowLongPtr(nint window, int index, nint value);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool GetLayeredWindowAttributes(nint window, out uint crashColor, out byte alpha, out uint flags);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool SetLayeredWindowAttributes(nint window, uint crashColor, byte alpha, uint flags);
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
     public static extern nint SetWindowsHookEx(
