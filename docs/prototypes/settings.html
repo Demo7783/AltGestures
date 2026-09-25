@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AltGestures 设置界面 · Fluent 方案全套原型</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#E8E8E8;font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:#111;padding:32px 20px 80px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto}
+  .head h1{font-size:26px;letter-spacing:-.01em;margin-bottom:10px}
+  .head p{font-size:15px;color:#555;line-height:1.7}
+  .head .hl{color:#111;font-weight:600}
+  .head{margin-bottom:24px}
+
+  /* ===== 窗口 ===== */
+  .win{background:#FAFAFA;border-radius:10px;overflow:hidden;box-shadow:0 12px 34px rgba(0,0,0,.14),0 2px 6px rgba(0,0,0,.07);font-size:14px;display:flex;flex-direction:column}
+  .titlebar{height:40px;display:flex;align-items:center;gap:9px;padding:0 14px;background:#F0F0F0;border-bottom:1px solid #E3E3E3;color:#3A3A3A;font-size:13px;user-select:none}
+  .dots{display:flex;gap:6px}.dots i{width:11px;height:11px;border-radius:50%;background:#D6D6D6;display:block}
+  .win-body{display:flex;height:600px}
+
+  .nav{width:200px;flex:none;background:#F4F4F4;border-right:1px solid #E7E7E7;padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+  .nav-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:6px;font-size:14px;cursor:pointer;border:0;background:none;width:100%;text-align:left;font-family:inherit;color:#3B3B3B;transition:background .12s}
+  .nav-item svg{width:16px;height:16px;flex:none;stroke-width:1.6}
+  .nav-item.active{background:#E4E7EB;color:#0F0F0F;font-weight:600}
+  .nav-item:hover:not(.active){background:#EAEAEA}
+  .nav-sep{height:1px;background:#E2E2E2;margin:10px 4px}
+
+  .main{flex:1;overflow-y:auto;background:#FCFCFC;padding:26px 30px 40px}
+  .page{display:none}.page.on{display:block}
+  .page h2{font-size:23px;letter-spacing:-.015em;font-weight:600;margin-bottom:6px}
+  .page .sub{font-size:14px;color:#6B6B6B;line-height:1.6;margin-bottom:26px}
+  .group{margin-bottom:30px}
+  .group-title{font-size:12.5px;font-weight:600;color:#7A7A7A;letter-spacing:.04em;margin-bottom:12px;text-transform:uppercase}
+
+  /* 键位表 */
+  table.keys{width:100%;border-collapse:collapse}
+  table.keys tr{height:46px;border-bottom:1px solid #EFEFEF}
+  table.keys tr:last-child{border-bottom:0}
+  table.keys td{padding:0;vertical-align:middle}
+  td.k{width:104px;font-size:14px;color:#2C2C2C}
+  td.k .mini{font-size:12px;color:#AAA;margin-left:4px}
+  td.a{padding-left:6px}
+  .sel{position:relative;display:block;max-width:250px;border:1px solid #DADADA;border-radius:6px;background:#fff}
+  .sel select{appearance:none;-webkit-appearance:none;width:100%;height:34px;padding:0 32px 0 11px;font-size:14px;font-family:inherit;cursor:pointer;background:none;color:#1C1C1C;border:0;outline:0}
+  .sel .chev{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;pointer-events:none;stroke:#8A8A8A;stroke-width:1.7;fill:none}
+  .check{display:flex;align-items:center;gap:10px;font-size:14px;padding:9px 0;cursor:pointer}
+  .check input{width:16px;height:16px;accent-color:#111;cursor:pointer;flex:none}
+  .inline{display:flex;align-items:center;gap:10px;font-size:14px;padding:9px 0}
+  .num{width:74px;height:32px;border:1px solid #DADADA;border-radius:6px;background:#fff;padding:0 10px;font-size:14px;font-family:inherit;text-align:right;color:#1C1C1C}
+  .unit{font-size:13px;color:#999}
+
+  /* ===== 手势页 ===== */
+  .seg{display:inline-flex;background:#EDEDED;border-radius:8px;padding:3px;gap:3px;margin-bottom:22px}
+  .seg button{border:0;background:none;font-family:inherit;font-size:13.5px;padding:7px 15px;border-radius:6px;cursor:pointer;color:#4A4A4A}
+  .seg button.on{background:#fff;color:#111;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+  .layout{display:none}.layout.on{display:block}
+
+  .gicon{width:20px;height:20px;stroke:#111;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  /* 排布 1：紧凑表格 */
+  table.gt{width:100%;border-collapse:collapse}
+  table.gt th{font-size:12px;font-weight:600;color:#8A8A8A;text-align:left;padding:0 0 8px;letter-spacing:.03em}
+  table.gt td{padding:0;height:44px;border-top:1px solid #F0F0F0;vertical-align:middle;font-size:14px}
+  table.gt .gi{width:34px}
+  table.gt .gn{width:92px;color:#2C2C2C}
+  table.gt .gb{width:78px}
+  table.gt .gc{width:150px;color:#2C2C2C}
+  table.gt .gp{color:#999;font-size:13px}
+  .pill{display:inline-block;font-size:11.5px;padding:2.5px 8px;border-radius:20px;background:#EAEAEA;color:#5A5A5A;white-space:nowrap}
+  .pill.r{background:#E8EEF7;color:#3A6EA5}
+  .pill.m{background:#EFEAE4;color:#8A6A45}
+  .pill.x{background:#EDE8F0;color:#6B4A7A}
+
+  /* 排布 2：卡片网格 */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{border:1px solid #E8E8E8;border-radius:8px;background:#fff;padding:14px 15px}
+  .card .ct{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .card .ct svg{width:26px;height:26px;stroke:#111;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .card .cn{font-size:14px;font-weight:600}
+  .card .cc{font-size:13px;color:#4A4A4A;margin-bottom:8px}
+  .card .cp{font-size:12.5px;color:#999;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  /* 排布 3：分组 */
+  .grp{border:1px solid #E8E8E8;border-radius:8px;overflow:hidden;margin-bottom:12px}
+  .grp-h{display:flex;align-items:center;gap:10px;padding:11px 14px;background:#F6F6F6;border-bottom:1px solid #E8E8E8;font-size:13.5px;font-weight:600}
+  .grp-h .cnt{margin-left:auto;font-size:12px;color:#999;font-weight:400}
+  .grp-r{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #F2F2F2;font-size:14px}
+  .grp-r:last-child{border-bottom:0}
+  .grp-r .gn{width:70px;color:#2C2C2C}
+  .grp-r .gc{color:#4A4A4A}
+  .grp-r .gp{margin-left:auto;font-size:12.5px;color:#999;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  /* 色块 */
+  .colors{display:flex;gap:14px;flex-wrap:wrap}
+  .swatch{border:1px solid #E8E8E8;border-radius:8px;background:#fff;padding:12px 14px;min-width:150px}
+  .swatch .row{display:flex;align-items:center;gap:10px}
+  .chip{width:26px;height:26px;border-radius:6px;border:1px solid rgba(0,0,0,.08);flex:none}
+  .swatch .lbl{font-size:13px;color:#3B3B3B}
+  .swatch .hex{font-size:11.5px;color:#AAA;font-family:ui-monospace,monospace;margin-top:6px}
+
+  .foot{margin-top:26px;padding:20px 22px;background:#111;color:#fff;border-radius:10px}
+  .foot h2{font-size:18px;margin-bottom:10px}
+  .foot p{font-size:14px;line-height:1.75;color:#BEBEBE}
+  .foot ol{margin:12px 0 0 20px;font-size:14px;line-height:1.95;color:#D8D8D8}
+  .foot code{background:#242424;padding:1px 6px;border-radius:4px;font-size:13px}
+  @media(max-width:760px){.win-body{flex-direction:column;height:auto}.nav{width:100%;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid #E7E7E7}.cards{grid-template-columns:1fr}.main{max-height:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>AltGestures 设置界面 · Fluent 方案全套</h1>
+    <p>已按 <span class="hl">方案 A</span> 出齐六页，左侧导航可点着切换。<span class="hl">「鼠标手势」页顶部有三个排布方案</span>，点着对比 —— 那是这张界面唯一还没定的地方。</p>
+  </div>
+
+  <div class="win">
+    <div class="titlebar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span>AltGestures 设置</span>
+    </div>
+    <div class="win-body">
+
+      <nav class="nav" id="nav">
+        <button class="nav-item active" data-p="p1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>窗口操作
+        </button>
+        <button class="nav-item" data-p="p2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 17l6-6 4 4 6-7"/></svg>鼠标手势
+        </button>
+        <button class="nav-item" data-p="p3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>触发与反馈
+        </button>
+        <button class="nav-item" data-p="p4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>应用规则
+        </button>
+        <div class="nav-sep"></div>
+        <button class="nav-item" data-p="p5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>通用
+        </button>
+        <button class="nav-item" data-p="p6">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>关于
+        </button>
+      </nav>
+
+      <main class="main">
+
+        <!-- ========== 1 窗口操作 ========== -->
+        <section class="page on" id="p1">
+          <h2>窗口操作</h2>
+          <p class="sub">按住 Alt 后各鼠标键的行为。不按 Alt 时，这些键全部交给手势。</p>
+          <div class="group">
+            <div class="group-title">鼠标键分配</div>
+            <table class="keys">
+              <tr><td class="k">左键</td><td class="a"><span class="sel"><select><option selected>移动窗口</option><option>缩放窗口</option><option>关闭窗口</option><option>最小化</option><option>居中</option><option>置顶切换</option><option>下沉</option><option>无</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></td></tr>
+              <tr><td class="k">中键</td><td class="a"><span class="sel"><select><option selected>缩放窗口</option><option>移动窗口</option><option>关闭窗口</option><option>最小化</option><option>居中</option><option>无</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></td></tr>
+              <tr><td class="k">右键</td><td class="a"><span class="sel"><select><option selected>缩放窗口</option><option>移动窗口</option><option>关闭窗口</option><option>居中</option><option>无</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></td></tr>
+              <tr><td class="k">侧键 4<span class="mini">X1</span></td><td class="a"><span class="sel"><select><option selected>无</option><option>关闭窗口</option><option>最小化</option><option>居中</option><option>置顶切换</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></td></tr>
+              <tr><td class="k">侧键 5<span class="mini">X2</span></td><td class="a"><span class="sel"><select><option selected>无</option><option>关闭窗口</option><option>最小化</option><option>置顶切换</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></td></tr>
+              <tr><td class="k">滚轮</td><td class="a"><span class="sel"><select><option selected>无</option><option>切换窗口</option><option>调节音量</option><option>调节透明度</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></td></tr>
+            </table>
+          </div>
+          <div class="group">
+            <div class="group-title">拖拽行为</div>
+            <label class="check"><input type="checkbox" checked>拖动窗口时自动聚焦</label>
+            <label class="check"><input type="checkbox">中键点击标题栏时将窗口下沉</label>
+            <label class="check"><input type="checkbox" checked>模拟 Windows Aero 吸附</label>
+            <div class="inline">吸附距离<input class="num" value="20"><span class="unit">像素</span></div>
+            <div class="inline">移动节流<input class="num" value="2"><span class="unit">像素</span></div>
+            <div class="inline">缩放节流<input class="num" value="5"><span class="unit">像素</span></div>
+          </div>
+          <div class="group">
+            <div class="group-title">修饰键</div>
+            <table class="keys">
+              <tr><td class="k">Shift</td><td class="a" style="color:#555">吸附到其他窗口（自动吸附关闭时的手动吸附）</td></tr>
+              <tr><td class="k">Ctrl</td><td class="a" style="color:#555">把正在拖拽的窗口提到前台</td></tr>
+              <tr><td class="k">空格</td><td class="a" style="color:#555">临时关闭自动吸附</td></tr>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========== 2 鼠标手势 ========== -->
+        <section class="page" id="p2">
+          <h2>鼠标手势</h2>
+          <p class="sub">按住触发键画出轨迹，松手执行命令。同一轨迹叠加不同触发键或修饰键可绑不同命令。</p>
+
+          <div class="seg" id="seg">
+            <button class="on" data-l="l1">紧凑表格</button>
+            <button data-l="l2">卡片网格</button>
+            <button data-l="l3">按触发键分组</button>
+          </div>
+
+          <!-- 排布 1 -->
+          <div class="layout on" id="l1">
+            <table class="gt">
+              <thead><tr><th></th><th>手势</th><th>触发键</th><th>命令</th><th>参数</th></tr></thead>
+              <tbody>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,10 17,10"/><polyline points="12,5 17,10 12,15"/></svg></td><td class="gn">向右</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">关闭标签页</td><td class="gp">模拟 Ctrl+W</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,10 3,10"/><polyline points="8,5 3,10 8,15"/></svg></td><td class="gn">向左</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">后退</td><td class="gp">模拟 Alt+←</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="10,17 10,3"/><polyline points="5,8 10,3 15,8"/></svg></td><td class="gn">向上</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">新建标签页</td><td class="gp">模拟 Ctrl+T</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="10,3 10,17"/><polyline points="5,12 10,17 15,12"/></svg></td><td class="gn">向下</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">关闭窗口</td><td class="gp">—</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,5 10,5 10,16"/><polyline points="6,12 10,16 14,12"/></svg></td><td class="gn">右 · 下</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">打开命令行</td><td class="gp">cmd.exe</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,5 10,5 10,16"/><polyline points="6,12 10,16 14,12"/></svg></td><td class="gn">左 · 下</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">最小化</td><td class="gp">—</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,15 10,15 10,5"/><polyline points="6,8 10,4 14,8"/></svg></td><td class="gn">右 · 上</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">搜索选中文字</td><td class="gp">搜索引擎: 必应</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,15 10,15 10,5"/><polyline points="6,8 10,4 14,8"/></svg></td><td class="gn">左 · 上</td><td class="gb"><span class="pill r">右键</span></td><td class="gc">置顶切换</td><td class="gp">—</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,16 3,6 17,6"/><polyline points="13,3 17,6 13,9"/></svg></td><td class="gn">上 · 右</td><td class="gb"><span class="pill x">侧键4</span></td><td class="gc">调节音量</td><td class="gp">步长 4</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,16 17,6 3,6"/><polyline points="7,3 3,6 7,9"/></svg></td><td class="gn">上 · 左</td><td class="gb"><span class="pill x">侧键4</span></td><td class="gc">切换窗口</td><td class="gp">—</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,16 3,6 10,6 10,16"/></svg></td><td class="gn">上 · 下</td><td class="gb"><span class="pill m">中键</span></td><td class="gc">粘贴为纯文本</td><td class="gp">模拟 Ctrl+Shift+V</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 排布 2 -->
+          <div class="layout" id="l2">
+            <div class="cards">
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="3,10 17,10"/><polyline points="12,5 17,10 12,15"/></svg><span class="cn">向右</span></div><div class="cc">关闭标签页</div><div class="cp">Ctrl+W · 右键</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="17,10 3,10"/><polyline points="8,5 3,10 8,15"/></svg><span class="cn">向左</span></div><div class="cc">后退</div><div class="cp">Alt+← · 右键</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="10,17 10,3"/><polyline points="5,8 10,3 15,8"/></svg><span class="cn">向上</span></div><div class="cc">新建标签页</div><div class="cp">Ctrl+T · 右键</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="10,3 10,17"/><polyline points="5,12 10,17 15,12"/></svg><span class="cn">向下</span></div><div class="cc">关闭窗口</div><div class="cp">— · 右键</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="3,5 10,5 10,16"/><polyline points="6,12 10,16 14,12"/></svg><span class="cn">右 · 下</span></div><div class="cc">打开命令行</div><div class="cp">cmd.exe · 右键</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="17,5 10,5 10,16"/><polyline points="6,12 10,16 14,12"/></svg><span class="cn">左 · 下</span></div><div class="cc">最小化</div><div class="cp">— · 右键</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="3,16 3,6 17,6"/><polyline points="13,3 17,6 13,9"/></svg><span class="cn">上 · 右</span></div><div class="cc">调节音量</div><div class="cp">步长 4 · 侧键4</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="17,16 17,6 3,6"/><polyline points="7,3 3,6 7,9"/></svg><span class="cn">上 · 左</span></div><div class="cc">切换窗口</div><div class="cp">— · 侧键4</div></div>
+              <div class="card"><div class="ct"><svg viewBox="0 0 20 20"><polyline points="3,16 3,6 10,6 10,16"/></svg><span class="cn">上 · 下</span></div><div class="cc">粘贴为纯文本</div><div class="cp">Ctrl+Shift+V · 中键</div></div>
+            </div>
+          </div>
+
+          <!-- 排布 3 -->
+          <div class="layout" id="l3">
+            <div class="grp">
+              <div class="grp-h"><svg class="gicon" viewBox="0 0 20 20" style="stroke:#3A6EA5"><polyline points="3,10 17,10"/><polyline points="12,5 17,10 12,15"/></svg>右键手势<span class="cnt">8 条</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,10 17,10"/><polyline points="12,5 17,10 12,15"/></svg><span class="gn">向右</span><span class="gc">关闭标签页</span><span class="gp">Ctrl+W</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,10 3,10"/><polyline points="8,5 3,10 8,15"/></svg><span class="gn">向左</span><span class="gc">后退</span><span class="gp">Alt+←</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="10,17 10,3"/><polyline points="5,8 10,3 15,8"/></svg><span class="gn">向上</span><span class="gc">新建标签页</span><span class="gp">Ctrl+T</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="10,3 10,17"/><polyline points="5,12 10,17 15,12"/></svg><span class="gn">向下</span><span class="gc">关闭窗口</span><span class="gp">—</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,5 10,5 10,16"/><polyline points="6,12 10,16 14,12"/></svg><span class="gn">右 · 下</span><span class="gc">打开命令行</span><span class="gp">cmd.exe</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,5 10,5 10,16"/><polyline points="6,12 10,16 14,12"/></svg><span class="gn">左 · 下</span><span class="gc">最小化</span><span class="gp">—</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,15 10,15 10,5"/><polyline points="6,8 10,4 14,8"/></svg><span class="gn">右 · 上</span><span class="gc">搜索选中文字</span><span class="gp">必应</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,15 10,15 10,5"/><polyline points="6,8 10,4 14,8"/></svg><span class="gn">左 · 上</span><span class="gc">置顶切换</span><span class="gp">—</span></div>
+            </div>
+            <div class="grp">
+              <div class="grp-h"><svg class="gicon" viewBox="0 0 20 20" style="stroke:#6B4A7A"><polyline points="3,16 3,6 17,6"/><polyline points="13,3 17,6 13,9"/></svg>侧键 4 手势<span class="cnt">2 条</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,16 3,6 17,6"/><polyline points="13,3 17,6 13,9"/></svg><span class="gn">上 · 右</span><span class="gc">调节音量</span><span class="gp">步长 4</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="17,16 17,6 3,6"/><polyline points="7,3 3,6 7,9"/></svg><span class="gn">上 · 左</span><span class="gc">切换窗口</span><span class="gp">—</span></div>
+            </div>
+            <div class="grp">
+              <div class="grp-h"><svg class="gicon" viewBox="0 0 20 20" style="stroke:#8A6A45"><circle cx="10" cy="10" r="3"/><path d="M10 2v3M10 15v3M2 10h3M15 10h3"/></svg>中键手势<span class="cnt">1 条</span></div>
+              <div class="grp-r"><svg class="gicon" viewBox="0 0 20 20"><polyline points="3,16 3,6 10,6 10,16"/></svg><span class="gn">上 · 下</span><span class="gc">粘贴为纯文本</span><span class="gp">Ctrl+Shift+V</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== 3 触发与反馈 ========== -->
+        <section class="page" id="p3">
+          <h2>触发与反馈</h2>
+          <p class="sub">控制手势怎么被触发、以及画的时候屏幕上显示什么。</p>
+          <div class="group">
+            <div class="group-title">轨迹配色</div>
+            <div class="colors">
+              <div class="swatch"><div class="row"><span class="chip" style="background:#2F80ED"></span><span class="lbl">右键轨迹</span></div><div class="hex">#2F80ED</div></div>
+              <div class="swatch"><div class="row"><span class="chip" style="background:#27AE60"></span><span class="lbl">中键轨迹</span></div><div class="hex">#27AE60</div></div>
+              <div class="swatch"><div class="row"><span class="chip" style="background:#9B51E0"></span><span class="lbl">侧键轨迹</span></div><div class="hex">#9B51E0</div></div>
+              <div class="swatch"><div class="row"><span class="chip" style="background:#F2994A"></span><span class="lbl">修饰键轨迹</span></div><div class="hex">#F2994A</div></div>
+            </div>
+          </div>
+          <div class="group">
+            <div class="group-title">显示</div>
+            <label class="check"><input type="checkbox" checked>绘制手势轨迹</label>
+            <label class="check"><input type="checkbox" checked>轨迹淡出</label>
+            <label class="check"><input type="checkbox" checked>在光标旁显示命令名</label>
+          </div>
+          <div class="group">
+            <div class="group-title">触发判定</div>
+            <div class="inline">起始停留超时<input class="num" value="200"><span class="unit">毫秒</span></div>
+            <label class="check"><input type="checkbox">启用 8 方向手势（可识别斜向）</label>
+            <label class="check"><input type="checkbox" checked>启用手势录入超时</label>
+            <div class="inline">最大手势步数<input class="num" value="4"><span class="unit">步</span></div>
+            <label class="check"><input type="checkbox" checked>优先作用于光标所在窗口</label>
+            <label class="check"><input type="checkbox">全屏程序中禁用手势</label>
+          </div>
+          <div class="group">
+            <div class="group-title">屏幕边缘</div>
+            <label class="check"><input type="checkbox" checked>启用屏幕四角热角</label>
+            <label class="check"><input type="checkbox" checked>启用屏幕边缘滚动（切换窗口）</label>
+          </div>
+        </section>
+
+        <!-- ========== 4 应用规则 ========== -->
+        <section class="page" id="p4">
+          <h2>应用规则</h2>
+          <p class="sub">为特定程序覆盖全局设置，或把它排除在外。</p>
+          <div class="group">
+            <div class="group-title">已配置的程序</div>
+            <table class="gt">
+              <thead><tr><th></th><th>程序</th><th>手势</th><th>窗口操作</th><th>来源</th></tr></thead>
+              <tbody>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14"/></svg></td><td class="gn">chrome.exe</td><td class="gc">继承全局</td><td class="gc" style="color:#999">继承全局</td><td class="gp">手动添加</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14"/></svg></td><td class="gn">Code.exe</td><td class="gc">覆盖 3 条</td><td class="gc" style="color:#999">继承全局</td><td class="gp">手动添加</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14"/></svg></td><td class="gn">Photoshop.exe</td><td class="gc" style="color:#B23A3A">禁用手势</td><td class="gc">仅移动窗口</td><td class="gp">手动添加</td></tr>
+                <tr><td class="gi"><svg class="gicon" viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M3 8h14"/></svg></td><td class="gn">explorer.exe</td><td class="gc">继承全局</td><td class="gc" style="color:#999">继承全局</td><td class="gp">内置规则</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="group">
+            <div class="group-title">全局黑名单</div>
+            <div class="inline" style="color:#555">窗口类名匹配：<code style="font-size:13px;color:#666">TaskSwitcherWnd, TaskSwitcherOverlayWnd, #32770</code></div>
+            <div class="inline" style="color:#555">不参与吸附的窗口：<code style="font-size:13px;color:#666">Chrome_WidgetWin_1, SpotifyMainWindow</code></div>
+          </div>
+        </section>
+
+        <!-- ========== 5 通用 ========== -->
+        <section class="page" id="p5">
+          <h2>通用</h2>
+          <p class="sub">启动方式、托盘行为与全局开关。</p>
+          <div class="group">
+            <div class="group-title">启动</div>
+            <label class="check"><input type="checkbox" checked>开机自动启动</label>
+            <label class="check"><input type="checkbox">启动后隐藏托盘图标</label>
+            <label class="check"><input type="checkbox">以管理员身份启动（可操作管理员权限的窗口）</label>
+            <p style="font-size:13px;color:#999;line-height:1.6;padding:4px 0 0 26px">开启后每次启动会弹出系统授权确认。</p>
+          </div>
+          <div class="group">
+            <div class="group-title">托盘</div>
+            <label class="check"><input type="checkbox" checked>显示托盘图标</label>
+            <div class="inline">暂停/恢复热键<input class="num" value="" placeholder="Ctrl+Alt+P" style="width:150px;text-align:left"></div>
+          </div>
+          <div class="group">
+            <div class="group-title">其他</div>
+            <div class="inline">界面语言
+              <span class="sel" style="max-width:170px"><select><option selected>简体中文</option><option>English</option></select><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </div>
+            <label class="check"><input type="checkbox" checked>检查更新</label>
+            <label class="check"><input type="checkbox">允许同时运行多个实例（可加载不同配置）</label>
+          </div>
+        </section>
+
+        <!-- ========== 6 关于 ========== -->
+        <section class="page" id="p6">
+          <h2>关于</h2>
+          <p class="sub">版本、许可与项目来源。</p>
+          <div class="group">
+            <div class="group-title">版本</div>
+            <table class="keys">
+              <tr><td class="k" style="width:120px;color:#777">AltGestures</td><td class="a">0.1.0（开发中）</td></tr>
+              <tr><td class="k" style="color:#777">许可证</td><td class="a">GPL-2.0</td></tr>
+              <tr><td class="k" style="color:#777">项目主页</td><td class="a" style="color:#3A6EA5">github.com/Demo7783/AltGestures</td></tr>
+            </table>
+          </div>
+          <div class="group">
+            <div class="group-title">来源与致谢</div>
+            <table class="keys">
+              <tr><td class="k" style="width:120px;color:#777">手势功能</td><td class="a" style="color:#555">基于 WGestures（Ying Yuandong，GPL-2.0）改造</td></tr>
+              <tr><td class="k" style="color:#777">窗口操作</td><td class="a" style="color:#555">行为参考 AltDrag（Stefan Sundin，GPL-3.0），独立实现</td></tr>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="foot">
+    <h2>这版里需要你拍板的一件事：手势绑定表用哪种排布</h2>
+    <p>三个排布在「鼠标手势」页顶部可点着切换。功能完全一样，区别只在信息密度和可扫读性。</p>
+    <ol>
+      <li><b>紧凑表格</b> —— 一行一条，一屏能看 11 条以上。手势多（几十条）时最快定位，最像工具。缺点是小轨迹图标不够直观。</li>
+      <li><b>卡片网格</b> —— 轨迹放大 26px、三列铺开，认手势最直观。缺点是条数一多就要滚很久，扫读效率最低。</li>
+      <li><b>按触发键分组</b> —— 右键/侧键/中键各自成块分组折叠，概念最清楚。缺点是多一层折叠，常用手势反而多一次点击。</li>
+    </ol>
+    <p style="margin-top:14px"><b>我推荐「紧凑表格」</b>：这是配置界面不是展示界面，你一年改不了几次，每次都是「找到那条改掉」——定位速度优先于预览好看。而且手势图标我按方向序列画成折线，20px 下已经能认。<br><br>你回一句选哪个，我把这套定稿成设计文档（<code>docs/UI-SPEC.md</code>），Phase 3 实现时逐像素比对。</p>
+  </div>
+
+</div>
+<script>
+  // 导航切换
+  document.querySelectorAll('#nav .nav-item').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#nav .nav-item').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+      document.getElementById(b.dataset.p).classList.add('on');
+      document.querySelector('.main').scrollTop=0;
+    });
+  });
+  // 排布切换
+  document.querySelectorAll('#seg button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#seg button').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      document.querySelectorAll('.layout').forEach(function(l){l.classList.remove('on')});
+      document.getElementById(b.dataset.l).classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>
