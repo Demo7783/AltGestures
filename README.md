@@ -47,7 +47,7 @@
 ## 构建
 
 ```bash
-git clone https://github.com/<owner>/AltGestures.git
+git clone https://github.com/Demo7783/AltGestures.git
 cd AltGestures
 dotnet build -c Release
 ```
