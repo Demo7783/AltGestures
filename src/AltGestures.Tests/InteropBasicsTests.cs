@@ -11,7 +11,7 @@ public sealed class InteropBasicsTests
     public void InputStructuresHaveRequiredLayout()
     {
         Assert.Equal(40, Unsafe.SizeOf<INPUT>());
-        Assert.Equal(24, Unsafe.SizeOf<MOUSEINPUT>());
+        Assert.Equal(32, Unsafe.SizeOf<MOUSEINPUT>());
         Assert.Equal(24, Unsafe.SizeOf<KEYBDINPUT>());
     }
 

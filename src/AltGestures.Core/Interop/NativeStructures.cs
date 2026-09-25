@@ -19,6 +19,37 @@ public struct POINT
 }
 
 [StructLayout(LayoutKind.Sequential)]
+public struct MSLLHOOKSTRUCT
+{
+    public POINT Point;
+    public uint MouseData;
+    public uint Flags;
+    public uint Time;
+    public UIntPtr ExtraInfo;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct KBDLLHOOKSTRUCT
+{
+    public uint VirtualKey;
+    public uint ScanCode;
+    public uint Flags;
+    public uint Time;
+    public UIntPtr ExtraInfo;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct MSG
+{
+    public nint Window;
+    public uint Message;
+    public nint WParam;
+    public nint LParam;
+    public uint Time;
+    public POINT Point;
+}
+
+[StructLayout(LayoutKind.Sequential)]
 public struct SIZE
 {
     public int Width;
@@ -70,7 +101,7 @@ public struct MOUSEINPUT
     public uint MouseData;
     public uint Flags;
     public uint Time;
-    public uint ExtraInfo;
+    public UIntPtr ExtraInfo;
 }
 
 [StructLayout(LayoutKind.Sequential)]

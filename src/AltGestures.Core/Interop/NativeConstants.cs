@@ -10,7 +10,10 @@ public static class NativeConstants
 
     public const int WM_KEYDOWN = 0x0100;
     public const int WM_KEYUP = 0x0101;
+    public const int WM_SYSKEYDOWN = 0x0104;
+    public const int WM_SYSKEYUP = 0x0105;
     public const int WM_MOUSEMOVE = 0x0200;
+    public const int WM_MOUSEWHEEL = 0x020A;
     public const int WM_LBUTTONDOWN = 0x0201;
     public const int WM_LBUTTONUP = 0x0202;
     public const int WM_RBUTTONDOWN = 0x0204;
@@ -20,6 +23,8 @@ public static class NativeConstants
     public const int WM_XBUTTONDOWN = 0x020B;
     public const int WM_XBUTTONUP = 0x020C;
     public const int WM_INPUT = 0x00FF;
+    public const int WM_CLOSE = 0x0010;
+    public const int WM_USER = 0x0400;
 
     public const int SM_CXSCREEN = 0;
     public const int SM_CYSCREEN = 1;

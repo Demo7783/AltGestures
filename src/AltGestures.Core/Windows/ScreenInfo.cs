@@ -67,6 +67,41 @@ public sealed class ScreenInfo
         return workArea;
     }
 
+    public static System.Drawing.Rectangle GetBoundsFromPoint(POINT point)
+    {
+        var screen = GetScreenFromPoint(point);
+        return System.Drawing.Rectangle.FromLTRB(
+            screen.Bounds.Left,
+            screen.Bounds.Top,
+            screen.Bounds.Right,
+            screen.Bounds.Bottom);
+    }
+
+    public static IReadOnlyList<System.Drawing.Rectangle> GetAllScreenBounds() =>
+        GetAllScreens()
+            .Select(screen => System.Drawing.Rectangle.FromLTRB(
+                screen.Bounds.Left,
+                screen.Bounds.Top,
+                screen.Bounds.Right,
+                screen.Bounds.Bottom))
+            .ToArray();
+
+    public static float GetDpiScale()
+    {
+        try
+        {
+            return User32.GetDpiForSystem() / 96.0f;
+        }
+        catch (EntryPointNotFoundException)
+        {
+            return 1.0f;
+        }
+        catch (DllNotFoundException)
+        {
+            return 1.0f;
+        }
+    }
+
     private static ScreenInfo FromMonitor(nint monitor)
     {
         var information = MONITORINFO.Create();

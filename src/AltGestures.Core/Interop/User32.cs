@@ -14,6 +14,12 @@ public static class User32
     public static extern nint GetForegroundWindow();
 
     [DllImport("user32.dll", SetLastError = true)]
+    public static extern nint GetDesktopWindow();
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern nint GetShellWindow();
+
+    [DllImport("user32.dll", SetLastError = true)]
     public static extern nint WindowFromPoint(POINT point);
 
     [DllImport("user32.dll", SetLastError = true)]
@@ -89,11 +95,21 @@ public static class User32
     public static extern nint CallNextHookEx(nint hook, int code, nint wParam, nint lParam);
 
     [DllImport("user32.dll", SetLastError = true)]
+    public static extern int GetMessage(out MSG message, nint window, int minimumMessage, int maximumMessage);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool PostThreadMessage(uint threadId, uint message, nint wParam, nint lParam);
+
+    [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool GetCursorPos(out POINT point);
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern int GetSystemMetrics(int index);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern uint GetDpiForSystem();
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern uint SendInput(uint inputCount, INPUT[] inputs, int inputSize);

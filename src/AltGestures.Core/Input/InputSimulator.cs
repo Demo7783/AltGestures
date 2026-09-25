@@ -6,6 +6,8 @@ public sealed class InputSimulator
 {
     private readonly Func<INPUT[], uint> sendInput;
 
+    public nint ExtraInfo { get; set; }
+
     public InputSimulator()
         : this(inputs => User32.SendInput(
             (uint)inputs.Length,
@@ -120,7 +122,7 @@ public sealed class InputSimulator
         return sendInput(inputs) == inputs.Length;
     }
 
-    private static INPUT CreateKeyboardInput(VirtualKeyCode virtualKey, uint flags = 0) => new()
+    private INPUT CreateKeyboardInput(VirtualKeyCode virtualKey, uint flags = 0) => new()
     {
         Type = NativeConstants.INPUT_KEYBOARD,
         Union = new InputUnion
@@ -128,12 +130,13 @@ public sealed class InputSimulator
             Keyboard = new KEYBDINPUT
             {
                 VirtualKey = (ushort)virtualKey,
-                Flags = flags
+                Flags = flags,
+                ExtraInfo = (UIntPtr)ExtraInfo
             }
         }
     };
 
-    private static INPUT CreateUnicodeInput(char character, uint flags = NativeConstants.KEYEVENTF_UNICODE) => new()
+    private INPUT CreateUnicodeInput(char character, uint flags = NativeConstants.KEYEVENTF_UNICODE) => new()
     {
         Type = NativeConstants.INPUT_KEYBOARD,
         Union = new InputUnion
@@ -142,12 +145,13 @@ public sealed class InputSimulator
             {
                 VirtualKey = 0,
                 ScanCode = character,
-                Flags = flags
+                Flags = flags,
+                ExtraInfo = (UIntPtr)ExtraInfo
             }
         }
     };
 
-    private static INPUT CreateMouseInput(
+    private INPUT CreateMouseInput(
         uint flags,
         uint mouseData = 0,
         int x = 0,
@@ -163,13 +167,14 @@ public sealed class InputSimulator
                     Dx = x,
                     Dy = y,
                     MouseData = mouseData,
-                    Flags = flags
+                    Flags = flags,
+                    ExtraInfo = (UIntPtr)ExtraInfo
                 }
             }
         };
     }
 
-    private static INPUT CreateXButtonInput(VirtualKeyCode virtualKey, uint flags)
+    private INPUT CreateXButtonInput(VirtualKeyCode virtualKey, uint flags)
     {
         var mouseData = virtualKey switch
         {
