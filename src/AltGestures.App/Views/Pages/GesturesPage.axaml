@@ -1,0 +1,111 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AltGestures.App.Views.Pages.GesturesPage">
+  <UserControl.Styles>
+    <Style Selector="Path.gesture-icon">
+      <Setter Property="Width" Value="20" /><Setter Property="Height" Value="20" />
+      <Setter Property="Stroke" Value="#FF111111" /><Setter Property="StrokeThickness" Value="1.6" />
+      <Setter Property="StrokeLineCap" Value="Round" /><Setter Property="StrokeJoin" Value="Round" />
+    </Style>
+  </UserControl.Styles>
+
+  <StackPanel Spacing="16">
+    <StackPanel Orientation="Horizontal" Spacing="6">
+      <Button Content="全部" Classes="active" Padding="15,7" />
+      <Button Content="右键" Padding="15,7" />
+      <Button Content="侧键" Padding="15,7" />
+      <Button Content="中键" Padding="15,7" />
+    </StackPanel>
+
+    <Border Classes="card" Padding="15,10">
+      <Grid ColumnDefinitions="36,86,76,150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+        <Grid.Styles>
+          <Style Selector="TextBlock.header">
+            <Setter Property="FontSize" Value="12" /><Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#FF8A8A8A" />
+          </Style>
+          <Style Selector="Border.row">
+            <Setter Property="Grid.ColumnSpan" Value="5" /><Setter Property="Height" Value="44" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushSeparatorSoft}" />
+            <Setter Property="BorderThickness" Value="0,1,0,0" />
+          </Style>
+        </Grid.Styles>
+        <TextBlock Grid.Column="1" Classes="header" Text="手势" Margin="0,0,0,8" />
+        <TextBlock Grid.Column="2" Classes="header" Text="触发键" Margin="0,0,0,8" />
+        <TextBlock Grid.Column="3" Classes="header" Text="命令" Margin="0,0,0,8" />
+        <TextBlock Grid.Column="4" Classes="header" Text="参数" Margin="0,0,0,8" />
+
+        <Path Grid.Row="1" Classes="gesture-icon" Data="{DynamicResource GestureRightGeometry}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Classes="body" Text="向右" VerticalAlignment="Center" />
+        <Border Grid.Row="1" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeRight}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeRightText}" Text="右键" />
+        </Border>
+        <TextBlock Grid.Row="1" Grid.Column="3" Classes="body" Text="关闭标签页" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="1" Grid.Column="4" Classes="muted" Text="Ctrl+W" VerticalAlignment="Center" />
+        <Border Grid.Row="1" Classes="row" />
+
+        <Path Grid.Row="2" Classes="gesture-icon" Data="{DynamicResource GestureLeftGeometry}" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Classes="body" Text="向左" VerticalAlignment="Center" />
+        <Border Grid.Row="2" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeRight}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeRightText}" Text="右键" />
+        </Border>
+        <TextBlock Grid.Row="2" Grid.Column="3" Classes="body" Text="后退" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="2" Grid.Column="4" Classes="muted" Text="Alt+Left" VerticalAlignment="Center" />
+        <Border Grid.Row="2" Classes="row" />
+
+        <Path Grid.Row="3" Classes="gesture-icon" Data="{DynamicResource GestureUpGeometry}" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Classes="body" Text="向上" VerticalAlignment="Center" />
+        <Border Grid.Row="3" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeRight}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeRightText}" Text="右键" />
+        </Border>
+        <TextBlock Grid.Row="3" Grid.Column="3" Classes="body" Text="新建标签页" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="3" Grid.Column="4" Classes="muted" Text="Ctrl+T" VerticalAlignment="Center" />
+        <Border Grid.Row="3" Classes="row" />
+
+        <Path Grid.Row="4" Classes="gesture-icon" Data="{DynamicResource GestureDownGeometry}" />
+        <TextBlock Grid.Row="4" Grid.Column="1" Classes="body" Text="向下" VerticalAlignment="Center" />
+        <Border Grid.Row="4" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeRight}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeRightText}" Text="右键" />
+        </Border>
+        <TextBlock Grid.Row="4" Grid.Column="3" Classes="body" Text="关闭窗口" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="4" Grid.Column="4" Classes="muted" Text="无" VerticalAlignment="Center" />
+        <Border Grid.Row="4" Classes="row" />
+
+        <Path Grid.Row="5" Classes="gesture-icon" Data="{DynamicResource GestureRightDownGeometry}" />
+        <TextBlock Grid.Row="5" Grid.Column="1" Classes="body" Text="右 · 下" VerticalAlignment="Center" />
+        <Border Grid.Row="5" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeRight}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeRightText}" Text="右键" />
+        </Border>
+        <TextBlock Grid.Row="5" Grid.Column="3" Classes="body" Text="打开命令行" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="5" Grid.Column="4" Classes="muted" Text="cmd.exe" VerticalAlignment="Center" />
+        <Border Grid.Row="5" Classes="row" />
+
+        <Path Grid.Row="6" Classes="gesture-icon" Data="{DynamicResource GestureUpRightGeometry}" />
+        <TextBlock Grid.Row="6" Grid.Column="1" Classes="body" Text="上 · 右" VerticalAlignment="Center" />
+        <Border Grid.Row="6" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeSide}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeSideText}" Text="侧键 4" />
+        </Border>
+        <TextBlock Grid.Row="6" Grid.Column="3" Classes="body" Text="调节音量" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="6" Grid.Column="4" Classes="muted" Text="步长 4" VerticalAlignment="Center" />
+        <Border Grid.Row="6" Classes="row" />
+
+        <Path Grid.Row="7" Classes="gesture-icon" Data="{DynamicResource GestureUpLeftGeometry}" />
+        <TextBlock Grid.Row="7" Grid.Column="1" Classes="body" Text="上 · 左" VerticalAlignment="Center" />
+        <Border Grid.Row="7" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeSide}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeSideText}" Text="侧键 4" />
+        </Border>
+        <TextBlock Grid.Row="7" Grid.Column="3" Classes="body" Text="切换窗口" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="7" Grid.Column="4" Classes="muted" Text="无" VerticalAlignment="Center" />
+        <Border Grid.Row="7" Classes="row" />
+
+        <Path Grid.Row="8" Classes="gesture-icon" Data="{DynamicResource GestureUpDownGeometry}" />
+        <TextBlock Grid.Row="8" Grid.Column="1" Classes="body" Text="上 · 下" VerticalAlignment="Center" />
+        <Border Grid.Row="8" Grid.Column="2" Classes="badge" Background="{DynamicResource BrushBadgeMiddle}" VerticalAlignment="Center" HorizontalAlignment="Left">
+          <TextBlock Classes="badge" Foreground="{DynamicResource BrushBadgeMiddleText}" Text="中键" />
+        </Border>
+        <TextBlock Grid.Row="8" Grid.Column="3" Classes="body" Text="粘贴为纯文本" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="8" Grid.Column="4" Classes="muted" Text="Ctrl+Shift+V" VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+  </StackPanel>
+</UserControl>

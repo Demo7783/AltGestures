@@ -1,0 +1,86 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AltGestures.App.Views.Pages.TriggerFeedbackPage">
+  <StackPanel Spacing="16">
+    <Border Classes="card">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="group-title" Text="轨迹配色" />
+        <UniformGrid Columns="4">
+          <Border Classes="card" Padding="14,12" Margin="0,0,12,0" BorderThickness="1">
+            <StackPanel Spacing="8">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Border Width="26" Height="26" CornerRadius="6" Background="{DynamicResource BrushTrailRight}" />
+                <TextBlock Classes="body" Text="右键轨迹" />
+              </StackPanel>
+              <TextBlock Classes="muted" Text="#2F80ED" />
+            </StackPanel>
+          </Border>
+          <Border Classes="card" Padding="14,12" Margin="0,0,12,0" BorderThickness="1">
+            <StackPanel Spacing="8">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Border Width="26" Height="26" CornerRadius="6" Background="{DynamicResource BrushTrailMiddle}" />
+                <TextBlock Classes="body" Text="中键轨迹" />
+              </StackPanel>
+              <TextBlock Classes="muted" Text="#27AE60" />
+            </StackPanel>
+          </Border>
+          <Border Classes="card" Padding="14,12" Margin="0,0,12,0" BorderThickness="1">
+            <StackPanel Spacing="8">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Border Width="26" Height="26" CornerRadius="6" Background="{DynamicResource BrushTrailSide}" />
+                <TextBlock Classes="body" Text="侧键轨迹" />
+              </StackPanel>
+              <TextBlock Classes="muted" Text="#9B51E0" />
+            </StackPanel>
+          </Border>
+          <Border Classes="card" Padding="14,12" BorderThickness="1">
+            <StackPanel Spacing="8">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Border Width="26" Height="26" CornerRadius="6" Background="{DynamicResource BrushTrailModifier}" />
+                <TextBlock Classes="body" Text="修饰键轨迹" />
+              </StackPanel>
+              <TextBlock Classes="muted" Text="#F2994A" />
+            </StackPanel>
+          </Border>
+        </UniformGrid>
+      </StackPanel>
+    </Border>
+
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+      <Border Classes="card" Grid.Column="0">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="group-title" Text="显示" />
+          <CheckBox Content="绘制手势轨迹" IsChecked="True" />
+          <CheckBox Content="轨迹淡出" IsChecked="True" />
+          <CheckBox Content="在光标旁显示命令名" IsChecked="True" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Grid.Column="1">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="group-title" Text="触发判定" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Classes="body" Text="起始停留超时" />
+            <TextBox Classes="app-input" Text="200" />
+            <TextBlock Classes="muted" Text="毫秒" />
+          </StackPanel>
+          <CheckBox Content="启用 8 方向手势（可识别斜向）" />
+          <CheckBox Content="启用手势录入超时" IsChecked="True" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Classes="body" Text="最大手势步数" />
+            <TextBox Classes="app-input" Width="52" Text="4" />
+            <TextBlock Classes="muted" Text="步" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <Border Classes="card">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="group-title" Text="屏幕边缘" />
+        <CheckBox Content="启用屏幕四角热角" IsChecked="True" />
+        <CheckBox Content="启用屏幕边缘滚动（切换窗口）" IsChecked="True" />
+        <CheckBox Content="全屏程序中禁用手势" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

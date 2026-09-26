@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StreamGeometry x:Key="GestureRightGeometry">M3 10 L17 10 M12 5 L17 10 L12 15</StreamGeometry>
+  <StreamGeometry x:Key="GestureLeftGeometry">M17 10 L3 10 M8 5 L3 10 L8 15</StreamGeometry>
+  <StreamGeometry x:Key="GestureUpGeometry">M10 17 L10 3 M5 8 L10 3 L15 8</StreamGeometry>
+  <StreamGeometry x:Key="GestureDownGeometry">M10 3 L10 17 M5 12 L10 17 L15 12</StreamGeometry>
+  <StreamGeometry x:Key="GestureRightDownGeometry">M3 5 L10 5 L10 16 M6 12 L10 16 L14 12</StreamGeometry>
+  <StreamGeometry x:Key="GestureLeftDownGeometry">M17 5 L10 5 L10 16 M6 12 L10 16 L14 12</StreamGeometry>
+  <StreamGeometry x:Key="GestureUpRightGeometry">M3 16 L3 6 L17 6 M13 3 L17 6 L13 9</StreamGeometry>
+  <StreamGeometry x:Key="GestureUpLeftGeometry">M17 16 L17 6 L3 6 M7 3 L3 6 L7 9</StreamGeometry>
+  <StreamGeometry x:Key="GestureUpDownGeometry">M3 16 L3 6 L10 6 L10 16</StreamGeometry>
+  <StreamGeometry x:Key="ApplicationGeometry">M3 4 H17 V16 H3 Z M3 8 H17</StreamGeometry>
+</ResourceDictionary>

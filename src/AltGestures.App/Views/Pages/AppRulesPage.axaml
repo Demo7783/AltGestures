@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AltGestures.App.Views.Pages.AppRulesPage">
+  <StackPanel Spacing="16">
+    <Border Classes="card">
+      <Grid ColumnDefinitions="36,120,120,140,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+        <Grid.Styles>
+          <Style Selector="TextBlock.header">
+            <Setter Property="FontSize" Value="12" /><Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#FF8A8A8A" />
+          </Style>
+          <Style Selector="Border.row">
+            <Setter Property="Grid.ColumnSpan" Value="5" /><Setter Property="Height" Value="44" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushSeparatorSoft}" />
+            <Setter Property="BorderThickness" Value="0,1,0,0" />
+          </Style>
+        </Grid.Styles>
+        <TextBlock Grid.Column="1" Classes="header" Text="程序" Margin="0,0,0,8" />
+        <TextBlock Grid.Column="2" Classes="header" Text="手势" Margin="0,0,0,8" />
+        <TextBlock Grid.Column="3" Classes="header" Text="窗口操作" Margin="0,0,0,8" />
+        <TextBlock Grid.Column="4" Classes="header" Text="来源" Margin="0,0,0,8" />
+
+        <Path Grid.Row="1" Width="20" Height="20" Stroke="#FF111111" StrokeThickness="1.6" Data="{DynamicResource ApplicationGeometry}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Classes="body" Text="chrome.exe" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="1" Grid.Column="2" Classes="body" Text="继承全局" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="1" Grid.Column="3" Classes="muted" Text="继承全局" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="1" Grid.Column="4" Classes="muted" Text="手动添加" VerticalAlignment="Center" />
+        <Border Grid.Row="1" Classes="row" />
+
+        <Path Grid.Row="2" Width="20" Height="20" Stroke="#FF111111" StrokeThickness="1.6" Data="{DynamicResource ApplicationGeometry}" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Classes="body" Text="Code.exe" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="2" Grid.Column="2" Classes="body" Text="覆盖 3 条" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="2" Grid.Column="3" Classes="muted" Text="继承全局" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="2" Grid.Column="4" Classes="muted" Text="手动添加" VerticalAlignment="Center" />
+        <Border Grid.Row="2" Classes="row" />
+
+        <Path Grid.Row="3" Width="20" Height="20" Stroke="#FF111111" StrokeThickness="1.6" Data="{DynamicResource ApplicationGeometry}" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Classes="body" Text="Photoshop.exe" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="3" Grid.Column="2" Classes="body" Text="禁用手势" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="3" Grid.Column="3" Classes="body" Text="仅移动窗口" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="3" Grid.Column="4" Classes="muted" Text="手动添加" VerticalAlignment="Center" />
+        <Border Grid.Row="3" Classes="row" />
+
+        <Path Grid.Row="4" Width="20" Height="20" Stroke="#FF111111" StrokeThickness="1.6" Data="{DynamicResource ApplicationGeometry}" />
+        <TextBlock Grid.Row="4" Grid.Column="1" Classes="body" Text="explorer.exe" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="4" Grid.Column="2" Classes="body" Text="继承全局" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="4" Grid.Column="3" Classes="muted" Text="继承全局" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="4" Grid.Column="4" Classes="muted" Text="内置规则" VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+
+    <Border Classes="card">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="group-title" Text="全局黑名单" />
+        <TextBlock Classes="secondary" Text="窗口类名匹配：TaskSwitcherWnd, TaskSwitcherOverlayWnd, #32770" TextWrapping="Wrap" />
+        <TextBlock Classes="secondary" Text="不参与吸附的窗口：Chrome_WidgetWin_1, SpotifyMainWindow" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

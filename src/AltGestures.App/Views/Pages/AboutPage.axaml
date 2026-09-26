@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AltGestures.App.Views.Pages.AboutPage">
+  <StackPanel Spacing="16">
+    <Border Classes="card">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="group-title" Text="版本" />
+        <Grid ColumnDefinitions="130,*" RowDefinitions="Auto,Auto,Auto">
+          <TextBlock Classes="secondary" Text="AltGestures" />
+          <TextBlock Grid.Column="1" Classes="body" Text="0.1.0（开发中）" />
+          <TextBlock Grid.Row="1" Classes="secondary" Text="许可证" />
+          <TextBlock Grid.Row="1" Grid.Column="1" Classes="body" Text="GPL-2.0" />
+          <TextBlock Grid.Row="2" Classes="secondary" Text="项目主页" />
+          <TextBlock Grid.Row="2" Grid.Column="1" Classes="body" Foreground="{DynamicResource BrushBadgeRightText}" Text="github.com/Demo7783/AltGestures" />
+        </Grid>
+      </StackPanel>
+    </Border>
+
+    <Border Classes="card">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="group-title" Text="来源与致谢" />
+        <Grid ColumnDefinitions="130,*" RowDefinitions="Auto,Auto">
+          <TextBlock Classes="secondary" Text="手势功能" />
+          <TextBlock Grid.Column="1" Classes="secondary" Text="基于 WGestures（Ying Yuandong，GPL-2.0）改造" TextWrapping="Wrap" />
+          <TextBlock Grid.Row="1" Classes="secondary" Text="窗口操作" />
+          <TextBlock Grid.Row="1" Grid.Column="1" Classes="secondary" Text="行为参考 AltDrag（Stefan Sundin，GPL-3.0），独立实现" TextWrapping="Wrap" />
+        </Grid>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

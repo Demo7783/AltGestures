@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AltGestures.App.Views.Pages.WindowActionsPage">
+  <StackPanel Spacing="16">
+    <Border Classes="card">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="group-title" Text="鼠标键分配" />
+        <UniformGrid Columns="2" Rows="3">
+          <StackPanel Margin="0,0,18,14" Spacing="7">
+            <TextBlock Classes="body" Text="左键" />
+            <ComboBox Classes="app-input" SelectedIndex="0">
+              <ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="无" />
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Spacing="7">
+            <TextBlock Classes="body" Text="中键" />
+            <ComboBox Classes="app-input" SelectedIndex="0">
+              <ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="无" />
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Margin="0,0,18,14" Spacing="7">
+            <TextBlock Classes="body" Text="右键" />
+            <ComboBox Classes="app-input" SelectedIndex="0">
+              <ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="无" />
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Spacing="7">
+            <TextBlock Classes="body" Text="滚轮" />
+            <ComboBox Classes="app-input" SelectedIndex="0">
+              <ComboBoxItem Content="无" /><ComboBoxItem Content="切换窗口" /><ComboBoxItem Content="调节音量" />
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Spacing="7">
+            <TextBlock Classes="body" Text="侧键 4（X1）" />
+            <ComboBox Classes="app-input" SelectedIndex="0">
+              <ComboBoxItem Content="无" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" />
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Spacing="7">
+            <TextBlock Classes="body" Text="侧键 5（X2）" />
+            <ComboBox Classes="app-input" SelectedIndex="0">
+              <ComboBoxItem Content="无" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" />
+            </ComboBox>
+          </StackPanel>
+        </UniformGrid>
+      </StackPanel>
+    </Border>
+
+    <Border Classes="card">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="group-title" Text="拖拽行为" />
+        <StackPanel Spacing="8">
+          <CheckBox Content="启用边角缩放" IsChecked="True" />
+          <CheckBox Content="双击标题栏最大化" IsChecked="True" />
+          <CheckBox Content="拖到屏幕边缘时吸附" IsChecked="True" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <Border Classes="card">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="group-title" Text="修饰键" />
+        <StackPanel Spacing="9">
+          <TextBlock Classes="secondary" Text="基础修饰键：左右 Alt 均可作为窗口操作触发键。" />
+          <TextBlock Classes="secondary" Text="附加修饰键：Shift 阻止吸附，Ctrl 降低移动速度。" />
+          <TextBlock Classes="muted" Text="仅窗口操作分支启用，不会改变鼠标手势的触发方式。" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

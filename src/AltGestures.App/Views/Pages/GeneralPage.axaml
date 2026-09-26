@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AltGestures.App.Views.Pages.GeneralPage">
+  <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+    <StackPanel Grid.Column="0" Spacing="16">
+      <Border Classes="card">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="group-title" Text="启动" />
+          <CheckBox Content="开机自动启动" IsChecked="True" />
+          <CheckBox Content="启动后隐藏托盘图标" />
+          <CheckBox Content="以管理员身份启动（可操作管理员权限的窗口）" />
+          <TextBlock Classes="muted" Text="开启后每次启动会弹出系统授权确认。" TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="group-title" Text="托盘" />
+          <CheckBox Content="显示托盘图标" IsChecked="True" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Classes="body" Text="暂停/恢复热键" />
+            <TextBox Width="150" Text="Ctrl+Alt+P" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </StackPanel>
+
+    <Border Classes="card" Grid.Column="1">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="group-title" Text="其他" />
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <TextBlock Classes="body" Text="界面语言" />
+          <ComboBox Classes="app-input" SelectedIndex="0">
+            <ComboBoxItem Content="简体中文" /><ComboBoxItem Content="English" />
+          </ComboBox>
+        </StackPanel>
+        <CheckBox Content="检查更新" IsChecked="True" />
+        <CheckBox Content="允许同时运行多个实例（可加载不同配置）" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

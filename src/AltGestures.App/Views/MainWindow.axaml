@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:pages="using:AltGestures.App.Views.Pages"
+        xmlns:vm="using:AltGestures.App.ViewModels"
+        xmlns:pageVm="using:AltGestures.App.ViewModels.Pages"
+        x:Class="AltGestures.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Width="960" Height="620"
+        CanResize="True"
+        WindowDecorations="None"
+        Background="{DynamicResource BrushTitleBar}"
+        Title="AltGestures 设置">
+  <Window.Styles>
+    <Style Selector="Path.nav-icon">
+      <Setter Property="Width" Value="16" />
+      <Setter Property="Height" Value="16" />
+      <Setter Property="StrokeThickness" Value="1.6" />
+      <Setter Property="StrokeLineCap" Value="Round" />
+      <Setter Property="StrokeJoin" Value="Round" />
+    </Style>
+  </Window.Styles>
+
+  <Window.DataTemplates>
+    <DataTemplate DataType="{x:Type pageVm:WindowActionsPageViewModel}">
+      <pages:WindowActionsPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pageVm:GesturesPageViewModel}">
+      <pages:GesturesPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pageVm:TriggerFeedbackPageViewModel}">
+      <pages:TriggerFeedbackPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pageVm:AppRulesPageViewModel}">
+      <pages:AppRulesPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pageVm:GeneralPageViewModel}">
+      <pages:GeneralPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pageVm:AboutPageViewModel}">
+      <pages:AboutPage />
+    </DataTemplate>
+  </Window.DataTemplates>
+
+  <Border CornerRadius="{DynamicResource CornerWindow}" ClipToBounds="True">
+    <DockPanel>
+      <Border DockPanel.Dock="Top" Height="42" Background="{DynamicResource BrushTitleBar}"
+              BorderBrush="{DynamicResource BrushSeparator}" BorderThickness="0,0,0,1">
+        <DockPanel Margin="16,0">
+          <TextBlock DockPanel.Dock="Right" Text="0.1.0（开发中）" Classes="muted"
+                     VerticalAlignment="Center" />
+          <TextBlock Text="AltGestures 设置" Classes="body" FontWeight="SemiBold"
+                     Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
+        </DockPanel>
+      </Border>
+
+      <DockPanel>
+        <Border DockPanel.Dock="Left" Width="184" Background="{DynamicResource BrushBackground}"
+                BorderBrush="{DynamicResource BrushSeparator}" BorderThickness="0,0,1,0">
+          <ListBox Classes="navigation" Margin="10,10,10,10"
+                   ItemsSource="{Binding Pages}"
+                   SelectedItem="{Binding SelectedPage}">
+            <ListBox.ItemTemplate>
+              <DataTemplate DataType="{x:Type pageVm:PageViewModel}">
+                <StackPanel Orientation="Horizontal" Spacing="9">
+                  <Path Classes="nav-icon" Data="{Binding IconGeometry}"
+                        Stroke="{DynamicResource BrushTextPrimary}" />
+                  <TextBlock Text="{Binding Title}" Classes="body" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Border>
+
+        <ScrollViewer Background="{DynamicResource BrushContent}">
+          <StackPanel Margin="{DynamicResource SpacePage}" Spacing="18">
+            <StackPanel Spacing="6">
+              <TextBlock Classes="page-title" Text="{Binding SelectedPage.Title}" />
+              <TextBlock Classes="secondary" Text="{Binding SelectedPage.Description}" />
+            </StackPanel>
+            <Separator Background="{DynamicResource BrushSeparatorSoft}" Height="1" />
+            <ContentControl Content="{Binding SelectedPage}" />
+          </StackPanel>
+        </ScrollViewer>
+      </DockPanel>
+    </DockPanel>
+  </Border>
+</Window>

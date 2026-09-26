@@ -6,6 +6,8 @@
 
 ### 新增
 
+- Phase 3A Avalonia 界面骨架：主窗口、左侧六项导航、视觉 token、六个静态设置页与内联 SVG 图标
+- Phase 3A 无头渲染流水线：Skia + Headless 生成六张 960×620 PNG，并校验文件非空白
 - Phase 2B2 全局热键：热键解析、专用消息线程、`RegisterHotKey` / `UnregisterHotKey` 封装与暂停/恢复热键配置
 - Phase 2B2 可配置窗口触发键：默认左右 Alt，支持左右 Ctrl / Shift / Win 多选，仲裁归属锁定语义保持不变
 - Phase 2C 窗口操作：移动、边角缩放、点击型动作、滚轮动作、工作区/窗口吸附、双击最大化与角落移动

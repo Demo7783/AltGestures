@@ -1,0 +1,97 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <SolidColorBrush x:Key="BrushBackground" Color="#FFF4F4F4" />
+    <SolidColorBrush x:Key="BrushContent" Color="#FCFCFC" />
+    <SolidColorBrush x:Key="BrushCard" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="BrushTitleBar" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="BrushSelected" Color="#FFE4E7EB" />
+    <SolidColorBrush x:Key="BrushSeparator" Color="#FFE3E3E3" />
+    <SolidColorBrush x:Key="BrushSeparatorSoft" Color="#FFEFEFEF" />
+    <SolidColorBrush x:Key="BrushTextPrimary" Color="#FF2C2C2C" />
+    <SolidColorBrush x:Key="BrushTextSecondary" Color="#FF6B6B6B" />
+    <SolidColorBrush x:Key="BrushTextMuted" Color="#FF999999" />
+    <SolidColorBrush x:Key="BrushBadgeRight" Color="#FFE8EEF7" />
+    <SolidColorBrush x:Key="BrushBadgeRightText" Color="#FF3A6EA5" />
+    <SolidColorBrush x:Key="BrushBadgeMiddle" Color="#FFEFEAE4" />
+    <SolidColorBrush x:Key="BrushBadgeMiddleText" Color="#FF8A6A45" />
+    <SolidColorBrush x:Key="BrushBadgeSide" Color="#FFEDE8F0" />
+    <SolidColorBrush x:Key="BrushBadgeSideText" Color="#FF6B4A7A" />
+    <SolidColorBrush x:Key="BrushTrailRight" Color="#FF2F80ED" />
+    <SolidColorBrush x:Key="BrushTrailMiddle" Color="#FF27AE60" />
+    <SolidColorBrush x:Key="BrushTrailSide" Color="#FF9B51E0" />
+    <SolidColorBrush x:Key="BrushTrailModifier" Color="#FFF2994A" />
+
+    <x:Double x:Key="SizePageTitle">23</x:Double>
+    <x:Double x:Key="SizeBody">14</x:Double>
+    <x:Double x:Key="SizeGroupTitle">12.5</x:Double>
+    <x:Double x:Key="SizeBadge">11.5</x:Double>
+    <CornerRadius x:Key="CornerControl">6</CornerRadius>
+    <CornerRadius x:Key="CornerCard">8</CornerRadius>
+    <CornerRadius x:Key="CornerWindow">10</CornerRadius>
+    <Thickness x:Key="SpacePage">24,22,24,24</Thickness>
+    <Thickness x:Key="SpaceCard">15</Thickness>
+  </Styles.Resources>
+
+  <Style Selector="TextBlock.page-title">
+    <Setter Property="FontSize" Value="{DynamicResource SizePageTitle}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+  </Style>
+  <Style Selector="TextBlock.body">
+    <Setter Property="FontSize" Value="{DynamicResource SizeBody}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}" />
+  </Style>
+  <Style Selector="TextBlock.secondary">
+    <Setter Property="FontSize" Value="{DynamicResource SizeBody}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextSecondary}" />
+  </Style>
+  <Style Selector="TextBlock.muted">
+    <Setter Property="FontSize" Value="{DynamicResource SizeBody}" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextMuted}" />
+  </Style>
+  <Style Selector="TextBlock.group-title">
+    <Setter Property="FontSize" Value="{DynamicResource SizeGroupTitle}" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushTextSecondary}" />
+  </Style>
+  <Style Selector="Border.card">
+    <Setter Property="Background" Value="{DynamicResource BrushCard}" />
+    <Setter Property="BorderBrush" Value="#FFE8E8E8" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerCard}" />
+    <Setter Property="Padding" Value="{DynamicResource SpaceCard}" />
+  </Style>
+  <Style Selector="Border.badge">
+    <Setter Property="CornerRadius" Value="20" />
+    <Setter Property="Padding" Value="8,2.5" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+  <Style Selector="TextBlock.badge">
+    <Setter Property="FontSize" Value="{DynamicResource SizeBadge}" />
+  </Style>
+  <Style Selector="ListBox.navigation">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector="ListBox.navigation ListBoxItem">
+    <Setter Property="Padding" Value="11,9" />
+    <Setter Property="MinHeight" Value="34" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerControl}" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="ListBox.navigation ListBoxItem:selected /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource BrushSelected}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CornerControl}" />
+  </Style>
+  <Style Selector="TextBox.app-input">
+    <Setter Property="Width" Value="74" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="TextAlignment" Value="Right" />
+  </Style>
+  <Style Selector="ComboBox.app-input">
+    <Setter Property="MinWidth" Value="150" />
+    <Setter Property="Height" Value="34" />
+  </Style>
+</Styles>

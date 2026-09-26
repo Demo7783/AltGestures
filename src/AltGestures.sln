@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltGestures.Core", "AltGest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltGestures.Tests", "AltGestures.Tests\AltGestures.Tests.csproj", "{9EA60B7E-0B2A-44D4-90D3-77F8970DA5B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltGestures.App", "AltGestures.App\AltGestures.App.csproj", "{D7DE7F3B-D287-4261-9463-A9F5304F21BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltGestures.App.Headless", "AltGestures.App.Headless\AltGestures.App.Headless.csproj", "{929BF7C6-4EF9-4CA2-BD71-941A5A5665B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{9EA60B7E-0B2A-44D4-90D3-77F8970DA5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EA60B7E-0B2A-44D4-90D3-77F8970DA5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EA60B7E-0B2A-44D4-90D3-77F8970DA5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7DE7F3B-D287-4261-9463-A9F5304F21BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7DE7F3B-D287-4261-9463-A9F5304F21BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7DE7F3B-D287-4261-9463-A9F5304F21BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7DE7F3B-D287-4261-9463-A9F5304F21BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{929BF7C6-4EF9-4CA2-BD71-941A5A5665B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{929BF7C6-4EF9-4CA2-BD71-941A5A5665B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{929BF7C6-4EF9-4CA2-BD71-941A5A5665B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{929BF7C6-4EF9-4CA2-BD71-941A5A5665B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
