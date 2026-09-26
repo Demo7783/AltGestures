@@ -1,3 +1,4 @@
+using AltGestures.Core.Input;
 using AltGestures.Core.Windowing;
 
 namespace AltGestures.Core.Configuration;
@@ -20,9 +21,23 @@ public sealed class AppConfig
 
     public int ResizeRate { get; set; } = 5;
 
+    /// <summary>
+    /// 获取或设置窗口操作触发键；每个名称代表左右两侧。
+    /// </summary>
+    public IReadOnlyList<string> TriggerKeys { get; set; } = ["Alt"];
+
+    /// <summary>
+    /// 获取或设置暂停/恢复热键；空值表示清空。
+    /// </summary>
+    public string? PauseResumeHotKey { get; set; } = "Ctrl+Alt+P";
+
     public bool AutoFocus { get; set; }
 
     public bool Aero { get; set; } = true;
 
     public WindowActionBinding CreateWindowActionBinding() => WindowActionBinding.FromNames(WindowActions);
+
+    public bool TryCreateTriggerModifiers(
+        out HotKeyModifiers triggerKeys,
+        out string? error) => HotKey.TryParseTriggerKeys(TriggerKeys, out triggerKeys, out error);
 }

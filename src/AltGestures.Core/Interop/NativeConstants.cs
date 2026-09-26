@@ -24,6 +24,9 @@ public static class NativeConstants
     public const int WM_XBUTTONUP = 0x020C;
     public const int WM_INPUT = 0x00FF;
     public const int WM_CLOSE = 0x0010;
+    public const int WM_NULL = 0x0000;
+    public const int WM_QUIT = 0x0012;
+    public const int WM_HOTKEY = 0x0312;
     public const int WM_SYSCOMMAND = 0x0112;
     public const int WM_USER = 0x0400;
 
@@ -57,6 +60,8 @@ public static class NativeConstants
     public const int GA_PARENT = 1;
     public const int GA_ROOT = 2;
     public const int GA_ROOTOWNER = 3;
+    public const nint HWND_MESSAGE = -3;
+    public const int ERROR_CLASS_ALREADY_EXISTS = 1410;
 
     public const uint INPUT_MOUSE = 0;
     public const uint INPUT_KEYBOARD = 1;

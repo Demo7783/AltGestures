@@ -322,6 +322,7 @@ public sealed class Phase2CTests
             hook,
             branch,
             bindings ?? WindowActionBinding.Default,
+            null,
             modifiers,
             timestamp,
             doubleClickTime ?? (() => 500),

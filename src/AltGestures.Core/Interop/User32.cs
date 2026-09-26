@@ -9,6 +9,7 @@ namespace AltGestures.Core.Interop;
 public static class User32
 {
     public delegate nint LowLevelHookProc(int code, nint wParam, nint lParam);
+    public delegate nint WindowProc(nint window, uint message, nint wParam, nint lParam);
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern nint GetForegroundWindow();
@@ -113,6 +114,41 @@ public static class User32
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern int GetMessage(out MSG message, nint window, int minimumMessage, int maximumMessage);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    public static extern ushort RegisterClassEx(ref WNDCLASSEX windowClass);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    public static extern nint CreateWindowEx(
+        uint extendedStyle,
+        string className,
+        string windowName,
+        uint style,
+        int x,
+        int y,
+        int width,
+        int height,
+        nint parent,
+        nint menu,
+        nint instance,
+        nint parameter);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern nint DefWindowProc(nint window, uint message, nint wParam, nint lParam);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool DestroyWindow(nint window);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool TranslateMessage(ref MSG message);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern nint DispatchMessage(ref MSG message);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern void PostQuitMessage(int exitCode);
 
     [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]

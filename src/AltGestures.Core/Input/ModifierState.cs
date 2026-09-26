@@ -83,4 +83,20 @@ public sealed class ModifierState
 
         return result;
     }
+
+    /// <summary>
+    /// 根据键盘事件更新左右修饰键状态。
+    /// </summary>
+    public static ModifierModifiers WithKey(ModifierModifiers current, VirtualKeyCode key, bool isDown)
+    {
+        foreach (var (mappedKey, modifier) in ModifierKeys)
+        {
+            if (mappedKey == key)
+            {
+                return isDown ? current | modifier : current & ~modifier;
+            }
+        }
+
+        return current;
+    }
 }

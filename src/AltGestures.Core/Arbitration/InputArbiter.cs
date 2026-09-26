@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using AltGestures.Core.Input;
+using AltGestures.Core.Configuration;
 using AltGestures.Core.Interop;
 using AltGestures.Core.Windowing;
 using AltGestures.Core.Windows;
@@ -14,6 +15,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
     private readonly IMouseKeyboardHook upstream;
     private readonly IWindowBranch windowBranch;
     private readonly WindowActionBinding bindings;
+    private readonly ModifierModifiers triggerKeys;
     private readonly Func<ModifierModifiers> modifierState;
     private readonly Func<long> timestamp;
     private readonly Func<uint> doubleClickTime;
@@ -32,12 +34,14 @@ public sealed class InputArbiter : IMouseKeyboardHook
         MouseKeyboardHook upstream,
         IWindowBranch windowBranch,
         WindowActionBinding bindings,
+        AppConfig? config = null,
         Func<long>? timestamp = null,
         Func<uint>? doubleClickTime = null)
         : this(
             upstream,
             windowBranch,
             bindings,
+            GetConfiguredTriggerKeys(config),
             () => new ModifierState().Current,
             timestamp,
             doubleClickTime,
@@ -49,6 +53,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
         IMouseKeyboardHook upstream,
         IWindowBranch windowBranch,
         WindowActionBinding bindings,
+        HotKeyModifiers? triggerKeys = null,
         Func<ModifierModifiers>? modifierState = null,
         Func<long>? timestamp = null,
         Func<uint>? doubleClickTime = null,
@@ -57,6 +62,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
         this.upstream = upstream ?? throw new ArgumentNullException(nameof(upstream));
         this.windowBranch = windowBranch ?? throw new ArgumentNullException(nameof(windowBranch));
         this.bindings = bindings ?? throw new ArgumentNullException(nameof(bindings));
+        this.triggerKeys = HotKey.ToPhysicalModifiers(triggerKeys ?? HotKeyModifiers.Alt);
         this.modifierState = modifierState ?? (() => new ModifierState().Current);
         this.timestamp = timestamp ?? (() => Environment.TickCount64);
         this.doubleClickTime = doubleClickTime ?? User32.GetDoubleClickTime;
@@ -139,7 +145,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
 
         modifiers = modifierState();
         var action = bindings[ToTrigger(button)];
-        if (!IsAltDown(modifiers) || action == WindowAction.None)
+        if (!IsTriggerDown(modifiers) || action == WindowAction.None)
         {
             Ownership = InputOwnership.Gesture;
             State = ArbitrationState.GestureTracking;
@@ -203,7 +209,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
         var delta = (short)(args.MouseData >> 16);
         modifiers = modifierState();
         var action = bindings.GetWheelAction(delta);
-        if (!IsAltDown(modifiers) || action == WindowAction.None)
+        if (!IsTriggerDown(modifiers) || action == WindowAction.None)
         {
             return false;
         }
@@ -255,16 +261,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
             spaceDown = isDown;
         }
 
-        modifiers = args.Key switch
-        {
-            VirtualKeyCode.VK_LSHIFT => WithModifier(modifiers, ModifierModifiers.LeftShift, isDown),
-            VirtualKeyCode.VK_RSHIFT => WithModifier(modifiers, ModifierModifiers.RightShift, isDown),
-            VirtualKeyCode.VK_LCONTROL => WithModifier(modifiers, ModifierModifiers.LeftControl, isDown),
-            VirtualKeyCode.VK_RCONTROL => WithModifier(modifiers, ModifierModifiers.RightControl, isDown),
-            VirtualKeyCode.VK_LMENU => WithModifier(modifiers, ModifierModifiers.LeftAlt, isDown),
-            VirtualKeyCode.VK_RMENU => WithModifier(modifiers, ModifierModifiers.RightAlt, isDown),
-            _ => modifiers
-        };
+        modifiers = ModifierState.WithKey(modifiers, args.Key, isDown);
     }
 
     private void Dispatch(ArbiterMessage message)
@@ -378,11 +375,6 @@ public sealed class InputArbiter : IMouseKeyboardHook
             : WindowDragModifiers.None)
         | (spaceDown ? WindowDragModifiers.Space : WindowDragModifiers.None);
 
-    private static ModifierModifiers WithModifier(
-        ModifierModifiers current,
-        ModifierModifiers modifier,
-        bool isDown) => isDown ? current | modifier : current & ~modifier;
-
     private readonly record struct ArbiterMessage(
         ArbiterMessageKind Kind,
         WindowAction Action,
@@ -446,8 +438,19 @@ public sealed class InputArbiter : IMouseKeyboardHook
 
     }
 
-    private static bool IsAltDown(ModifierModifiers value) =>
-        (value & (ModifierModifiers.LeftAlt | ModifierModifiers.RightAlt)) != 0;
+    private static HotKeyModifiers GetConfiguredTriggerKeys(AppConfig? config)
+    {
+        var triggerKeys = HotKeyModifiers.None;
+        string? error = null;
+        if (config?.TryCreateTriggerModifiers(out triggerKeys, out error) is not true || error is null)
+        {
+            throw new ArgumentException(error ?? "触发键配置无效。", nameof(config));
+        }
+
+        return triggerKeys;
+    }
+
+    private bool IsTriggerDown(ModifierModifiers value) => (value & triggerKeys) != 0;
 
     private enum ArbiterMessageKind
     {

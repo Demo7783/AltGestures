@@ -49,6 +49,23 @@ public struct MSG
     public POINT Point;
 }
 
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public struct WNDCLASSEX
+{
+    public int Size;
+    public uint Style;
+    public nint WindowProc;
+    public int ClassExtraBytes;
+    public int WindowExtraBytes;
+    public nint Instance;
+    public nint Icon;
+    public nint Cursor;
+    public nint Background;
+    [MarshalAs(UnmanagedType.LPWStr)] public string? MenuName;
+    [MarshalAs(UnmanagedType.LPWStr)] public string? ClassName;
+    public nint SmallIcon;
+}
+
 [StructLayout(LayoutKind.Sequential)]
 public struct SIZE
 {

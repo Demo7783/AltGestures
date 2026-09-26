@@ -17,6 +17,7 @@ public enum VirtualKeyCode
     VK_CAPITAL = 0x14,
     VK_ESCAPE = 0x1B,
     VK_SPACE = 0x20,
+    VK_F1 = 0x70,
     VK_LEFT = 0x25,
     VK_UP = 0x26,
     VK_RIGHT = 0x27,
