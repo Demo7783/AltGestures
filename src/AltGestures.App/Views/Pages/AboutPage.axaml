@@ -1,5 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AltGestures.App.ViewModels.Pages"
+             x:DataType="vm:AboutPageViewModel"
              x:Class="AltGestures.App.Views.Pages.AboutPage">
   <StackPanel Spacing="16">
     <Border Classes="card">
@@ -7,7 +9,7 @@
         <TextBlock Classes="group-title" Text="版本" />
         <Grid ColumnDefinitions="130,*" RowDefinitions="Auto,Auto,Auto">
           <TextBlock Classes="secondary" Text="AltGestures" />
-          <TextBlock Grid.Column="1" Classes="body" Text="0.1.0（开发中）" />
+          <TextBlock Grid.Column="1" Classes="body" Text="{Binding Version}" />
           <TextBlock Grid.Row="1" Classes="secondary" Text="许可证" />
           <TextBlock Grid.Row="1" Grid.Column="1" Classes="body" Text="GPL-2.0" />
           <TextBlock Grid.Row="2" Classes="secondary" Text="项目主页" />

@@ -10,13 +10,6 @@
   </UserControl.Styles>
 
   <StackPanel Spacing="16">
-    <StackPanel Orientation="Horizontal" Spacing="6">
-      <Button Content="全部" Classes="active" Padding="15,7" />
-      <Button Content="右键" Padding="15,7" />
-      <Button Content="侧键" Padding="15,7" />
-      <Button Content="中键" Padding="15,7" />
-    </StackPanel>
-
     <Border Classes="card" Padding="15,10">
       <Grid ColumnDefinitions="36,86,76,150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
         <Grid.Styles>

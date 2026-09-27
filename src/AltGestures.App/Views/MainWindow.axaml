@@ -17,6 +17,7 @@
       <Setter Property="StrokeThickness" Value="1.6" />
       <Setter Property="StrokeLineCap" Value="Round" />
       <Setter Property="StrokeJoin" Value="Round" />
+      <Setter Property="Stretch" Value="Uniform" />
     </Style>
   </Window.Styles>
 
@@ -46,8 +47,6 @@
       <Border DockPanel.Dock="Top" Height="42" Background="{DynamicResource BrushTitleBar}"
               BorderBrush="{DynamicResource BrushSeparator}" BorderThickness="0,0,0,1">
         <DockPanel Margin="16,0">
-          <TextBlock DockPanel.Dock="Right" Text="0.1.0（开发中）" Classes="muted"
-                     VerticalAlignment="Center" />
           <TextBlock Text="AltGestures 设置" Classes="body" FontWeight="SemiBold"
                      Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center" />
         </DockPanel>

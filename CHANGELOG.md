@@ -6,6 +6,7 @@
 
 ### 新增
 
+- Phase 3B 设置界面对齐：导航图标定稿、程序集版本号移入关于页、六页控件与分组补齐
 - Phase 3A Avalonia 界面骨架：主窗口、左侧六项导航、视觉 token、六个静态设置页与内联 SVG 图标
 - Phase 3A 无头渲染流水线：Skia + Headless 生成六张 960×620 PNG，并校验文件非空白
 - Phase 2B2 全局热键：热键解析、专用消息线程、`RegisterHotKey` / `UnregisterHotKey` 封装与暂停/恢复热键配置

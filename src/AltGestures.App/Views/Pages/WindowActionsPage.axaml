@@ -9,37 +9,37 @@
           <StackPanel Margin="0,0,18,14" Spacing="7">
             <TextBlock Classes="body" Text="左键" />
             <ComboBox Classes="app-input" SelectedIndex="0">
-              <ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="无" />
+              <ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" /><ComboBoxItem Content="居中" /><ComboBoxItem Content="置顶切换" /><ComboBoxItem Content="下沉" /><ComboBoxItem Content="无" />
             </ComboBox>
           </StackPanel>
           <StackPanel Spacing="7">
             <TextBlock Classes="body" Text="中键" />
             <ComboBox Classes="app-input" SelectedIndex="0">
-              <ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="无" />
+              <ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" /><ComboBoxItem Content="居中" /><ComboBoxItem Content="无" />
             </ComboBox>
           </StackPanel>
           <StackPanel Margin="0,0,18,14" Spacing="7">
             <TextBlock Classes="body" Text="右键" />
             <ComboBox Classes="app-input" SelectedIndex="0">
-              <ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="无" />
+              <ComboBoxItem Content="缩放窗口" /><ComboBoxItem Content="移动窗口" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="居中" /><ComboBoxItem Content="无" />
             </ComboBox>
           </StackPanel>
           <StackPanel Spacing="7">
             <TextBlock Classes="body" Text="滚轮" />
             <ComboBox Classes="app-input" SelectedIndex="0">
-              <ComboBoxItem Content="无" /><ComboBoxItem Content="切换窗口" /><ComboBoxItem Content="调节音量" />
+              <ComboBoxItem Content="无" /><ComboBoxItem Content="切换窗口" /><ComboBoxItem Content="调节音量" /><ComboBoxItem Content="调节透明度" />
             </ComboBox>
           </StackPanel>
           <StackPanel Spacing="7">
             <TextBlock Classes="body" Text="侧键 4（X1）" />
             <ComboBox Classes="app-input" SelectedIndex="0">
-              <ComboBoxItem Content="无" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" />
+              <ComboBoxItem Content="无" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" /><ComboBoxItem Content="居中" /><ComboBoxItem Content="置顶切换" />
             </ComboBox>
           </StackPanel>
           <StackPanel Spacing="7">
             <TextBlock Classes="body" Text="侧键 5（X2）" />
             <ComboBox Classes="app-input" SelectedIndex="0">
-              <ComboBoxItem Content="无" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" />
+              <ComboBoxItem Content="无" /><ComboBoxItem Content="关闭窗口" /><ComboBoxItem Content="最小化" /><ComboBoxItem Content="置顶切换" />
             </ComboBox>
           </StackPanel>
         </UniformGrid>
@@ -50,9 +50,24 @@
       <StackPanel Spacing="10">
         <TextBlock Classes="group-title" Text="拖拽行为" />
         <StackPanel Spacing="8">
-          <CheckBox Content="启用边角缩放" IsChecked="True" />
-          <CheckBox Content="双击标题栏最大化" IsChecked="True" />
-          <CheckBox Content="拖到屏幕边缘时吸附" IsChecked="True" />
+          <CheckBox Content="拖动窗口时自动聚焦" IsChecked="True" />
+          <CheckBox Content="中键点击标题栏时将窗口下沉" />
+          <CheckBox Content="模拟 Windows Aero 吸附" IsChecked="True" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Classes="body" Text="吸附距离" />
+            <TextBox Classes="app-input" Text="20" />
+            <TextBlock Classes="muted" Text="像素" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Classes="body" Text="移动节流" />
+            <TextBox Classes="app-input" Text="2" />
+            <TextBlock Classes="muted" Text="像素" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Classes="body" Text="缩放节流" />
+            <TextBox Classes="app-input" Text="5" />
+            <TextBlock Classes="muted" Text="像素" />
+          </StackPanel>
         </StackPanel>
       </StackPanel>
     </Border>
@@ -60,11 +75,14 @@
     <Border Classes="card">
       <StackPanel Spacing="10">
         <TextBlock Classes="group-title" Text="修饰键" />
-        <StackPanel Spacing="9">
-          <TextBlock Classes="secondary" Text="基础修饰键：左右 Alt 均可作为窗口操作触发键。" />
-          <TextBlock Classes="secondary" Text="附加修饰键：Shift 阻止吸附，Ctrl 降低移动速度。" />
-          <TextBlock Classes="muted" Text="仅窗口操作分支启用，不会改变鼠标手势的触发方式。" />
-        </StackPanel>
+        <Grid ColumnDefinitions="90,*" RowDefinitions="Auto,Auto,Auto">
+          <TextBlock Classes="body" Text="Shift" />
+          <TextBlock Grid.Column="1" Classes="secondary" Text="吸附到其他窗口（自动吸附关闭时的手动吸附）" TextWrapping="Wrap" />
+          <TextBlock Grid.Row="1" Classes="body" Text="Ctrl" />
+          <TextBlock Grid.Row="1" Grid.Column="1" Classes="secondary" Text="把正在拖拽的窗口提到前台" TextWrapping="Wrap" />
+          <TextBlock Grid.Row="2" Classes="body" Text="空格" />
+          <TextBlock Grid.Row="2" Grid.Column="1" Classes="secondary" Text="临时关闭自动吸附" TextWrapping="Wrap" />
+        </Grid>
       </StackPanel>
     </Border>
   </StackPanel>

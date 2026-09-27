@@ -7,8 +7,8 @@ public sealed record GesturesPageViewModel : PageViewModel
     public GesturesPageViewModel()
         : base(
             "鼠标手势",
-            "紧凑表格：轨迹、触发键、命令与参数。",
-            Geometry.Parse("M3 10 L17 10 M12 5 L17 10 L12 15"))
+            "按住触发键画出轨迹，松手执行命令。同一轨迹叠加不同触发键或修饰键可绑不同命令。",
+            Geometry.Parse("M3 10 H17 M13 5.5 L17.5 10 L13 14.5"))
     {
     }
 }

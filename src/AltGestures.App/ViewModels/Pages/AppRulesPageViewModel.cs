@@ -8,7 +8,7 @@ public sealed record AppRulesPageViewModel : PageViewModel
         : base(
             "应用规则",
             "为特定程序覆盖全局设置，或把它排除在外。",
-            Geometry.Parse("M4 16 L6 8 H14 L16 16 M7 16 H13 M8 5 H12"))
+            Geometry.Parse("M10 2.5 L16 5 V9.5 Q16 14.5 10 17.5 Q4 14.5 4 9.5 V5 Z"))
     {
     }
 }

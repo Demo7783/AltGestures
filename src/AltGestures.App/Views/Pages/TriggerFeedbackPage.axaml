@@ -70,6 +70,8 @@
             <TextBox Classes="app-input" Width="52" Text="4" />
             <TextBlock Classes="muted" Text="步" />
           </StackPanel>
+          <CheckBox Content="优先作用于光标所在窗口" IsChecked="True" />
+          <CheckBox Content="全屏程序中禁用手势" />
         </StackPanel>
       </Border>
     </Grid>
@@ -79,7 +81,6 @@
         <TextBlock Classes="group-title" Text="屏幕边缘" />
         <CheckBox Content="启用屏幕四角热角" IsChecked="True" />
         <CheckBox Content="启用屏幕边缘滚动（切换窗口）" IsChecked="True" />
-        <CheckBox Content="全屏程序中禁用手势" />
       </StackPanel>
     </Border>
   </StackPanel>
