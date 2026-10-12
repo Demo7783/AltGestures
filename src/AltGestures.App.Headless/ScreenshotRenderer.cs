@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Threading;
 using Avalonia.Headless;
 using Avalonia.Media.Imaging;
+using AltGestures.App.Services;
 using AltGestures.App.ViewModels;
 using AltGestures.App.ViewModels.Pages;
 using AltGestures.App.Views;
@@ -31,11 +32,14 @@ internal static class ScreenshotRenderer
         var stagingDirectory = PrepareStagingDirectory(root);
         List<ScreenshotResult> screenshots = [];
 
+        // 用内存配置：渲染只读默认值，不碰用户真实配置
+        using var configService = ConfigService.CreateInMemory();
+
         var appBuilder = BuildAvaloniaApp();
         appBuilder.AfterSetup(_ => Dispatcher.UIThread.Post(() =>
         {
             Console.WriteLine("开始渲染六页...");
-            screenshots.AddRange(RenderAll(stagingDirectory));
+            screenshots.AddRange(RenderAll(stagingDirectory, configService));
             Console.WriteLine("六页渲染完成。");
 
             if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
@@ -125,7 +129,7 @@ internal static class ScreenshotRenderer
         return true;
     }
 
-    private static IReadOnlyList<ScreenshotResult> RenderAll(DirectoryInfo outputDirectory)
+    private static IReadOnlyList<ScreenshotResult> RenderAll(DirectoryInfo outputDirectory, ConfigService configService)
     {
         var window = new MainWindow
         {
@@ -136,12 +140,12 @@ internal static class ScreenshotRenderer
 
         return
         [
-            Render(window, outputDirectory, "01-window-actions.png", page => page is WindowActionsPageViewModel),
-            Render(window, outputDirectory, "02-gestures.png", page => page is GesturesPageViewModel),
-            Render(window, outputDirectory, "03-trigger-feedback.png", page => page is TriggerFeedbackPageViewModel),
-            Render(window, outputDirectory, "04-app-rules.png", page => page is AppRulesPageViewModel),
-            Render(window, outputDirectory, "05-general.png", page => page is GeneralPageViewModel),
-            Render(window, outputDirectory, "06-about.png", page => page is AboutPageViewModel)
+            Render(window, outputDirectory, "01-window-actions.png", page => page is WindowActionsPageViewModel, configService),
+            Render(window, outputDirectory, "02-gestures.png", page => page is GesturesPageViewModel, configService),
+            Render(window, outputDirectory, "03-trigger-feedback.png", page => page is TriggerFeedbackPageViewModel, configService),
+            Render(window, outputDirectory, "04-app-rules.png", page => page is AppRulesPageViewModel, configService),
+            Render(window, outputDirectory, "05-general.png", page => page is GeneralPageViewModel, configService),
+            Render(window, outputDirectory, "06-about.png", page => page is AboutPageViewModel, configService)
         ];
     }
 
@@ -149,9 +153,10 @@ internal static class ScreenshotRenderer
         MainWindow window,
         DirectoryInfo outputDirectory,
         string fileName,
-        Func<PageViewModel, bool> pageSelector)
+        Func<PageViewModel, bool> pageSelector,
+        ConfigService configService)
     {
-        var viewModel = new MainWindowViewModel();
+        var viewModel = new MainWindowViewModel(configService);
         viewModel.SelectedPage = viewModel.Pages.Single(pageSelector);
 
         window.DataContext = viewModel;

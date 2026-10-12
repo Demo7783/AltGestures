@@ -45,6 +45,7 @@ public sealed class PathTracker : IPathTracker
     private int effectiveMove = 20;
     private int stepSize = 3;
     private bool stayTimeoutEnabled;
+    private readonly bool ownsHook;
     private bool disposed;
 
     public PathTracker()
@@ -56,17 +57,29 @@ public sealed class PathTracker : IPathTracker
     {
     }
 
+    public PathTracker(MouseKeyboardHook hook, InputSimulator inputSimulator)
+        : this(
+            hook,
+            inputSimulator,
+            ScreenInfo.GetAllScreenBounds,
+            (point, preferWindowUnderCursor) => Win32GestureContext.Capture(point, preferWindowUnderCursor),
+            ownsHook: false)
+    {
+    }
+
     internal PathTracker(
         IMouseKeyboardHook hook,
         InputSimulator inputSimulator,
         Func<IReadOnlyList<Rectangle>> screenBoundsFactory,
         Func<Point, bool, GestureContext> contextFactory,
-        Func<bool>? anyMouseButtonIsDown = null)
+        Func<bool>? anyMouseButtonIsDown = null,
+        bool ownsHook = true)
     {
         this.hook = hook ?? throw new ArgumentNullException(nameof(hook));
         this.inputSimulator = inputSimulator ?? throw new ArgumentNullException(nameof(inputSimulator));
         this.screenBoundsFactory = screenBoundsFactory ?? throw new ArgumentNullException(nameof(screenBoundsFactory));
         this.contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
+        this.ownsHook = ownsHook;
 
         edgeDetector = new ScreenEdgeInteractDetector(anyMouseButtonIsDown);
         edgeDetector.Rub += edge => Enqueue(MessageKind.EdgeRubbed, parameter: (int)edge);
@@ -193,7 +206,10 @@ public sealed class PathTracker : IPathTracker
 
         try
         {
-            hook.Install();
+            if (ownsHook)
+            {
+                hook.Install();
+            }
         }
         catch
         {
@@ -212,7 +228,10 @@ public sealed class PathTracker : IPathTracker
         stopRequested = true;
         Enqueue(MessageKind.Stop);
         StopWorker();
-        hook.Uninstall();
+        if (ownsHook)
+        {
+            hook.Uninstall();
+        }
         paused = false;
         edgeDetector.Paused = false;
     }
@@ -247,7 +266,10 @@ public sealed class PathTracker : IPathTracker
 
         hook.MouseHookEvent -= HandleMouseHookEvent;
         hook.KeyboardHookEvent -= HandleKeyboardHookEvent;
-        hook.Dispose();
+        if (ownsHook)
+        {
+            hook.Dispose();
+        }
         edgeDetector.Dispose();
         stayTimer?.Dispose();
         messageAvailable.Dispose();
@@ -894,7 +916,7 @@ public sealed class PathTracker : IPathTracker
     private readonly record struct TrackerMessage(MessageKind Kind, int X, int Y, int Parameter);
 }
 
-internal interface IMouseKeyboardHook : IDisposable
+public interface IMouseKeyboardHook : IDisposable
 {
     event Action<MouseHookEventArgs>? MouseHookEvent;
     event Action<KeyboardHookEventArgs>? KeyboardHookEvent;

@@ -31,7 +31,7 @@ public sealed class InputArbiter : IMouseKeyboardHook
     private bool spaceDown;
 
     public InputArbiter(
-        MouseKeyboardHook upstream,
+        IMouseKeyboardHook upstream,
         IWindowBranch windowBranch,
         WindowActionBinding bindings,
         AppConfig? config = null,

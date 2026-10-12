@@ -38,7 +38,31 @@ public sealed class ConfigStore
     public void Save(AppConfig config)
     {
         ArgumentNullException.ThrowIfNull(config);
-        using var stream = File.Create(path);
-        JsonSerializer.Serialize(stream, config, Options);
+        Directory.CreateDirectory(Path.GetDirectoryName(path) ?? ".");
+        var temporaryPath = path + ".tmp";
+        try
+        {
+            using (var stream = File.Create(temporaryPath))
+            {
+                JsonSerializer.Serialize(stream, config, Options);
+                stream.Flush();
+            }
+
+            if (File.Exists(path))
+            {
+                File.Replace(temporaryPath, path, null);
+            }
+            else
+            {
+                File.Move(temporaryPath, path);
+            }
+        }
+        finally
+        {
+            if (File.Exists(temporaryPath))
+            {
+                File.Delete(temporaryPath);
+            }
+        }
     }
 }

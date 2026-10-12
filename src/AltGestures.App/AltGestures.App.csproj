@@ -24,4 +24,8 @@
        App.axaml 通过 avares:// 引用；不要再显式声明 AvaloniaResource，
        否则同一路径会同时以 XAML 与资源两种身份注册，运行时抛
        "An item with the same key has already been added"。 -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\AltGestures.Core\AltGestures.Core.csproj" />
+  </ItemGroup>
 </Project>

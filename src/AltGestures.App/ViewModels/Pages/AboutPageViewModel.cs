@@ -1,12 +1,14 @@
 using System.Reflection;
+using AltGestures.App.Services;
 using Avalonia.Media;
 
 namespace AltGestures.App.ViewModels.Pages;
 
-public sealed record AboutPageViewModel : PageViewModel
+public sealed class AboutPageViewModel : PageViewModel
 {
-    public AboutPageViewModel()
+    public AboutPageViewModel(ConfigService configService)
         : base(
+            configService,
             "关于",
             "版本、许可与项目来源。",
             Geometry.Parse("M10 2.5 A7.5 7.5 0 1 0 10 17.5 A7.5 7.5 0 1 0 10 2.5 M10 9 V14 M10 6.2 V6.3"))
