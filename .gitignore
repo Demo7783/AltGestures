@@ -23,6 +23,9 @@ coverage*.xml
 config.local.json
 *.bak-*
 
+# 无头渲染暂存目录（渲染成功后才提交到 artifacts/screenshots）
+artifacts/.screenshots-staging/
+
 # NuGet
 packages/
 *.nupkg
