@@ -6,6 +6,7 @@
 
 ### 新增
 
+- Phase 3C 设置页配置双向绑定：六页 Compiled Bindings、枚举中文显示、数值输入与集合文本编辑接入配置 VM
 - Phase 3B 设置界面对齐：导航图标定稿、程序集版本号移入关于页、六页控件与分组补齐
 - Phase 3A Avalonia 界面骨架：主窗口、左侧六项导航、视觉 token、六个静态设置页与内联 SVG 图标
 - Phase 3A 无头渲染流水线：Skia + Headless 生成六张 960×620 PNG，并校验文件非空白

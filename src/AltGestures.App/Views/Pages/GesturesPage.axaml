@@ -1,5 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AltGestures.App.ViewModels.Pages"
+             x:DataType="vm:GesturesPageViewModel"
              x:Class="AltGestures.App.Views.Pages.GesturesPage">
   <UserControl.Styles>
     <Style Selector="Path.gesture-icon">
@@ -99,6 +101,14 @@
         <TextBlock Grid.Row="8" Grid.Column="3" Classes="body" Text="粘贴为纯文本" VerticalAlignment="Center" />
         <TextBlock Grid.Row="8" Grid.Column="4" Classes="muted" Text="Ctrl+Shift+V" VerticalAlignment="Center" />
       </Grid>
+    </Border>
+
+    <Border Classes="card">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="group-title" Text="全局开关" />
+        <CheckBox Content="启用鼠标手势" IsChecked="{Binding GesturesEnabled, Mode=TwoWay}" />
+        <CheckBox Content="接收鼠标输入" IsChecked="{Binding InputEnabled, Mode=TwoWay}" />
+      </StackPanel>
     </Border>
   </StackPanel>
 </UserControl>

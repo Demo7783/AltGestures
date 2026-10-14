@@ -1,5 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AltGestures.App.ViewModels.Pages"
+             x:DataType="vm:AppRulesPageViewModel"
              x:Class="AltGestures.App.Views.Pages.AppRulesPage">
   <StackPanel Spacing="16">
     <Border Classes="card">
@@ -52,8 +54,24 @@
     <Border Classes="card">
       <StackPanel Spacing="10">
         <TextBlock Classes="group-title" Text="全局黑名单" />
-        <TextBlock Classes="secondary" Text="窗口类名匹配：TaskSwitcherWnd, TaskSwitcherOverlayWnd, #32770" TextWrapping="Wrap" />
-        <TextBlock Classes="secondary" Text="不参与吸附的窗口：Chrome_WidgetWin_1, SpotifyMainWindow" TextWrapping="Wrap" />
+        <TextBox MinHeight="76"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 TextAlignment="Left"
+                 PlaceholderText="每行一个窗口类名"
+                 Text="{Binding GlobalBlacklistText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+      </StackPanel>
+    </Border>
+
+    <Border Classes="card">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="group-title" Text="禁用手势的程序" />
+        <TextBox MinHeight="76"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 TextAlignment="Left"
+                 PlaceholderText="每行一个进程名"
+                 Text="{Binding DisabledProcessesText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       </StackPanel>
     </Border>
   </StackPanel>

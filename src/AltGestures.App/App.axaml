@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="using:AltGestures.App.Converters"
              x:Class="AltGestures.App.App">
   <Application.Styles>
     <FluentTheme />
@@ -7,6 +8,7 @@
   </Application.Styles>
   <Application.Resources>
     <ResourceDictionary>
+      <converters:EnumDisplayConverter x:Key="EnumDisplayConverter" />
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://AltGestures.App/Assets/icons.axaml" />
       </ResourceDictionary.MergedDictionaries>
